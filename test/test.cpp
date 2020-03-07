@@ -319,11 +319,13 @@ namespace test
 		TEST_METHOD(TestMethod5)
 		{
 			// paralile
-			// 4
-			// L 0 0 0 1
-			// L 0 0 1 1
-			// L 1 0 1 2
-			// L 1 0 2 1
+			// 5
+			// L - 14 - 4 20 2
+			// L - 2 0 - 2 4
+			// L - 12 0 4 0
+			// L - 6 - 2 14 8
+			// L - 14 - 2 20 4
+
 			ifstream fin("../test/test5.txt");
 			if (!fin) {
 				Assert::AreEqual(132, 0);
@@ -332,6 +334,22 @@ namespace test
 			ins.inputShapes(fin);
 			int cnt = ins.cntTotalInsPoint();
 			Assert::AreEqual(7, cnt);
+		}
+
+		TEST_METHOD(TestMethod6)
+		{
+			// paralile
+			// 2
+			// L - 99999 99999 - 99999 - 99999
+			// L 99998 99999 99999 - 99999
+			ifstream fin("../test/test6.txt");
+			if (!fin) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			ins.inputShapes(fin);
+			int cnt = ins.cntTotalInsPoint();
+			Assert::AreEqual(3, cnt);
 		}
 
 	};
