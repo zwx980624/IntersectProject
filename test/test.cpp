@@ -318,7 +318,7 @@ namespace test
 
 		TEST_METHOD(TestMethod5)
 		{
-			// paralile
+			// zonghe
 			// 5
 			// L - 14 - 4 20 2
 			// L - 2 0 - 2 4
@@ -338,10 +338,13 @@ namespace test
 
 		TEST_METHOD(TestMethod6)
 		{
-			// paralile
-			// 2
+			// limit slope
+			// 5
 			// L - 99999 99999 - 99999 - 99999
 			// L 99998 99999 99999 - 99999
+			// L - 99998 99999 - 99999 - 99999
+			// L 99999 99999 - 99999 99999
+			// L 99999 - 99999 - 99999 - 99998
 			ifstream fin("../test/test6.txt");
 			if (!fin) {
 				Assert::AreEqual(132, 0);
@@ -349,8 +352,61 @@ namespace test
 			CIntersect ins;
 			ins.inputShapes(fin);
 			int cnt = ins.cntTotalInsPoint();
-			Assert::AreEqual(3, cnt);
+			Assert::AreEqual(10, cnt);
+		}
+		
+		TEST_METHOD(TestMethod7)
+		{
+			// line + circ, eazy
+			// 2
+			// L 0 0 1 1
+			// C 0 0 1
+			ifstream fin("../test/test7.txt");
+			if (!fin) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			ins.inputShapes(fin);
+			int cnt = ins.cntTotalInsPoint();
+			Assert::AreEqual(2, cnt);
 		}
 
+		TEST_METHOD(TestMethod8)
+		{
+			// medium line + circ
+			// 4
+			// C 1 0 2
+			// C 2 2 1
+			// C 3 - 2 6
+			// L - 1 4 4 - 1
+			ifstream fin("../test/test8.txt");
+			if (!fin) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			ins.inputShapes(fin);
+			int cnt = ins.cntTotalInsPoint();
+			Assert::AreEqual(6, cnt);
+		}
+		TEST_METHOD(TestMethod9)
+		{
+			// tangetn
+			// 6
+			// C 0 0 10
+			// C 4 3 5
+			// C - 5 0 5
+			// L 2 14 14 - 2
+			// L 0 0 0 1
+			// L - 10 0 - 10 1
+
+			ifstream fin("../test/test9.txt");
+			if (!fin) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			ins.inputShapes(fin);
+			int cnt = ins.cntTotalInsPoint();
+			Assert::AreEqual(9, cnt);
+		}
 	};
 }

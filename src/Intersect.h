@@ -9,7 +9,7 @@ class CIntersect {
 private:
 	std::vector<CLine> _lines;
 	std::map<CSlope, std::set<CLine> > _k2lines;
-	//std::set<CCircle> _circles;
+	std::set<CCircle> _circles;
 	std::map<CPoint, std::set<CShape> > _insp2shapes;
 
 public:
