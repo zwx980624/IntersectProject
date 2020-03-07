@@ -1,7 +1,9 @@
 #include <iostream>
+#include <fstream>
 #include "intersect.h"
 using namespace std;
 
 int main() {
-	cout << "starting programme" << endl;
+	ifstream fin;
+	fin.open("test1.txt");
 }

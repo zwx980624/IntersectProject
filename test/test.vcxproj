@@ -102,7 +102,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>..\IntersectProject\Debug\Main.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\IntersectProject\Debug\Main.obj;..\IntersectProject\Debug\Intersect.obj;..\IntersectProject\Debug\Shape.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

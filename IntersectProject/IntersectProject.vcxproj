@@ -19,10 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\Intersect.cpp" />
     <ClCompile Include="..\src\Main.cpp" />
+    <ClCompile Include="..\src\Shape.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Intersect.h" />
+    <ClInclude Include="..\src\Shape.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
