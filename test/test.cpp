@@ -206,7 +206,7 @@ namespace test
 			}
 		}
 
-		TEST_METHOD(TestMethod4)
+		/*TEST_METHOD(TestMethod4)
 		{
 			// paralile
 			// 4
@@ -242,7 +242,7 @@ namespace test
 					k++;
 				}
 			}
-		}
+		}*/
 	};
 
 	TEST_CLASS(test_cnt_intersect)

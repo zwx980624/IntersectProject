@@ -18,7 +18,9 @@
 x64/
 x86/
 bld/
-[Bb]in/
+/bin/*
+/Bin/*
+!/bin/intersect.exe
 [Oo]bj/
 [Ll]og/
 
