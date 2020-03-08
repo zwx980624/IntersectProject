@@ -64,7 +64,7 @@ CLine::CLine(int x1, int y1, int x2, int y2): CShape("Line")
 {
 	_A = y2 - y1;
 	_B = x1 - x2;
-	_C = y1 * x2 - x1 * y2;
+	_C = (double)y1 * x2 - (double)x1 * y2;
 	if (x1 - x2 == 0) {
 		_k = CSlope(true);
 		_b = CBias(true);
@@ -95,7 +95,7 @@ bool CLine::operator==(const CLine & rhs) const
 
 CCircle::CCircle(int x0, int y0, int r) : CShape("Circle"), _x0(x0), _y0(y0), _r(r) 
 {
-	_D = -2 * x0;
-	_E = -2 * y0;
-	_F = x0 * x0 + y0 * y0 - r * r;
+	_D = -2 * _x0;
+	_E = -2 * _y0;
+	_F = _x0 * _x0 + _y0 * _y0 - _r * _r;
 }
