@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <ctime>
 #include "intersect.h"
 using namespace std;
 
@@ -27,10 +28,13 @@ int main(int argc, char** argv) {
 		cout << "input file cannot open\n";
 		exit(0);
 	}
+	clock_t tic = clock();
 	CIntersect ins;
 	ins.inputShapes(fin);
 	int cnt = ins.cntTotalInsPoint();
 	ofstream fout(outfile);
 	fout << cnt;
+	clock_t toc = clock();
+	cout << "time: " << (toc - tic) * 1.0 / CLOCKS_PER_SEC << endl;
 	return 0;
 }

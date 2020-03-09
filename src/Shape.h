@@ -51,19 +51,19 @@ private:
 public:
 	CShape(std::string type);
 	bool operator < (const CShape & rhs) const;
-	std::string type() const { return _type; }
-	virtual double A() const { return 0; }
-	virtual double B() const { return 0; }
-	virtual double C() const { return 0; }
-	virtual double x0() const { return 0; }
-	virtual double y0() const { return 0; }
-	virtual double r() const { return 0; }
-	virtual double D() const { return 0; }
-	virtual double E() const { return 0; }
-	virtual double F() const { return 0; }
-	virtual CSlope k() const { return CSlope(0.0); }
-	virtual CBias b() const { return CBias(0.0); }
-	int id() const { return _id; }
+	inline std::string type() const { return _type; }
+	inline virtual double A() const { return 0; }
+	inline virtual double B() const { return 0; }
+	inline virtual double C() const { return 0; }
+	inline virtual double x0() const { return 0; }
+	inline virtual double y0() const { return 0; }
+	inline virtual double r() const { return 0; }
+	inline virtual double D() const { return 0; }
+	inline virtual double E() const { return 0; }
+	inline virtual double F() const { return 0; }
+	inline virtual CSlope k() const { return CSlope(0.0); }
+	inline virtual CBias b() const { return CBias(0.0); }
+	inline int id() const { return _id; }
 };
 
 class CLine: public CShape {
@@ -76,12 +76,12 @@ private:
 public:
 	CLine(int x1, int y1, int x2, int y2);
 	CLine(double A, double B, double C);
-	virtual CSlope k() const { return _k; }
-	virtual CBias b() const { return _b; }
+	inline virtual CSlope k() const { return _k; }
+	inline virtual CBias b() const { return _b; }
 	bool operator == (const CLine & rhs) const; // A, B, C all equal
-	virtual double A() const { return _A; }
-	virtual double B() const  { return _B; }
-	virtual double C() const  { return _C; }
+	inline virtual double A() const { return _A; }
+	inline virtual double B() const  { return _B; }
+	inline virtual double C() const  { return _C; }
 };
 
 class CCircle : public CShape {
@@ -94,10 +94,10 @@ private:
 	double _F;
 public:
 	CCircle(int x0, int y0, int r);
-	virtual double x0() const { return _x0; }
-	virtual double y0() const { return _y0; }
-	virtual double r() const { return _r; }
-	virtual double D() const { return _D; }
-	virtual double E() const { return _E; }
-	virtual double F() const { return _F; }
+	inline virtual double x0() const { return _x0; }
+	inline virtual double y0() const { return _y0; }
+	inline virtual double r() const { return _r; }
+	inline virtual double D() const { return _D; }
+	inline virtual double E() const { return _E; }
+	inline virtual double F() const { return _F; }
 };
