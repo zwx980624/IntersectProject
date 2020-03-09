@@ -3,6 +3,7 @@
 
 *.mdj
 *.out
+*.diagsession
 # User-specific files
 *.suo
 *.user

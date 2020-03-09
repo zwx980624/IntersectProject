@@ -12,7 +12,7 @@ void CIntersect::inputShapes(std::istream& in) {
 			int x1, y1, x2, y2;
 			in >> x1 >> y1 >> x2 >> y2;
 			CLine line(x1, y1, x2, y2);
-			_k2lines[line.k()].insert(line);
+			_k2lines[line.k()].push_back(line);
 			_lines.push_back(line);
 		}
 		else {
@@ -78,16 +78,16 @@ std::vector<CPoint> calcInsCircLine(const CShape& circ, const CShape& line)
 		double y0 = circ.y0();
 		double b1 = line.b().val();
 		double d_2 = (k * x0 - y0 + b1) * (k * x0 - y0 + b1) / (1 + k * k);
-		double n_2 = circ.r() * circ.r() - d_2;
+		double d = sqrt(d_2);
 		double n;
-		if (-n_2 > EPS * EPS) { // not intersect
+		if (d - circ.r() > EPS) { // not intersect
 			return ret;
 		}
-		else if (n_2 < EPS * EPS){ // tangent
+		else if (circ.r() - d < EPS){ // tangent
 			n = 0.0;
 		}
 		else { // intersect 
-			n = sqrt(n_2);
+			n = sqrt(circ.r() * circ.r() - d_2);
 		}
 		double b2 = x0 / k + y0;
 		double xc = (b2 - b1) / (k + 1 / k);
@@ -141,30 +141,32 @@ int CIntersect::cntTotalInsPoint()
 	vector<CLine> over;
 	vector<CCircle> circ_over;
 	for (auto mit = _k2lines.begin(); mit != _k2lines.end(); ++mit) {
-		set<CLine>& s = mit->second;
-		for (set<CLine>::iterator sit = s.begin(); sit != s.end(); ++sit) {
+		vector<CLine>& s = mit->second;
+		for (auto sit = s.begin(); sit != s.end(); ++sit) {
 			// trick: If the cross point already exists, 
 			//        we can cut calculation with other lines crossing this point.
 			set<int> can_skip_id; // use this to record which line do not need calculate.
 			for (auto oit = over.begin(); oit != over.end(); ++oit) {
 				if (can_skip_id.find(oit->id()) == can_skip_id.end()) { // cannot skip
 					CPoint point = calcShapeInsPoint(*sit, *oit)[0]; // must intersect
-					if (_insp2shapes.find(point) == _insp2shapes.end()) { // new cross point
-						_insp2shapes[point].insert(*sit);
-						_insp2shapes[point].insert(*oit);
+					if (_insp2shapesId.find(point) == _insp2shapesId.end()) { // new cross point
+						_insp2shapesId[point].push_back(sit->id());
+						_insp2shapesId[point].push_back(oit->id());
 					}
 					else { // cross point already exists
-						set<CShape>& sl = _insp2shapes[point];
-						for (auto slit = sl.begin(); slit != sl.end(); ++slit) {
-							can_skip_id.insert(slit->id());
-						}
-						_insp2shapes[point].insert(*sit);
+						vector<int>& sl = _insp2shapesId[point];
+						can_skip_id.insert(sl.begin(), sl.end());
+						_insp2shapesId[point].push_back(sit->id());
 					}
 				}
 			}
 		}
-		for (set<CLine>::iterator sit = s.begin(); sit != s.end(); ++sit) {
-			over.push_back(*sit);
+		over.insert(over.end(), s.begin(), s.end());
+	}
+
+	if (_circles.size() != 0) { // if there are circles. extract keys to one set.
+		for (auto mit = _insp2shapesId.begin(); mit != _insp2shapesId.end(); ++mit) {
+			_insPoints.insert(mit->first);
 		}
 	}
 
@@ -173,18 +175,23 @@ int CIntersect::cntTotalInsPoint()
 		for (auto oit = over.begin(); oit != over.end(); ++oit) {
 			vector<CPoint> points = calcShapeInsPoint(*sit, *oit);
 			for (auto pit = points.begin(); pit != points.end(); ++pit) {
-				_insp2shapes[*pit].insert(*sit);
+				_insPoints.insert(*pit);
 			}
 		}
 		for (auto oit = circ_over.begin(); oit != circ_over.end(); ++oit) {
 			vector<CPoint> points = calcShapeInsPoint(*sit, *oit);
 			for (auto pit = points.begin(); pit != points.end(); ++pit) {
-				_insp2shapes[*pit].insert(*sit);
+				_insPoints.insert(*pit);
 			}
 		}
 		circ_over.push_back(*sit);
 	}
 
-	return _insp2shapes.size();
+	if (_circles.size() != 0) {
+		return _insPoints.size();
+	}
+	else {
+		return _insp2shapesId.size();
+	}
 }
 

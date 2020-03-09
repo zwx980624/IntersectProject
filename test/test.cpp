@@ -13,7 +13,7 @@ using namespace std;
 
 namespace test
 {
-	TEST_CLASS(test_input)
+	/*TEST_CLASS(test_input)
 	{
 	public:
 		
@@ -205,7 +205,7 @@ namespace test
 				}
 			}
 		}
-
+*/
 		/*TEST_METHOD(TestMethod4)
 		{
 			// paralile
@@ -243,7 +243,7 @@ namespace test
 				}
 			}
 		}*/
-	};
+//	};
 
 	TEST_CLASS(test_cnt_intersect)
 	{

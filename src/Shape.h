@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#define EPS 1e-6
+#define EPS 1e-8
 
 class CPoint {
 private:
