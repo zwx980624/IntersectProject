@@ -62,8 +62,8 @@ bool CSlope::operator==(const CSlope & rhs) const
 
 CLine::CLine(int x1, int y1, int x2, int y2): CShape("Line")
 {
-	_A = y2 - y1;
-	_B = x1 - x2;
+	_A = (double)y2 - y1;
+	_B = (double)x1 - x2;
 	_C = (double)y1 * x2 - (double)x1 * y2;
 	if (x1 - x2 == 0) {
 		_k = CSlope(true);

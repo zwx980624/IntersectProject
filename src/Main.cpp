@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
 	ofstream fout(outfile);
 	fout << cnt;
 	clock_t toc = clock();
-	cout << "time: " << (toc - tic) * 1.0 / CLOCKS_PER_SEC << endl;
+	cout << "time: " << ((double)toc - tic) * 1.0 / CLOCKS_PER_SEC << endl;
 	exit(0);
 	return 0;
 }

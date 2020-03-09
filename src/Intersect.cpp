@@ -132,7 +132,7 @@ std::vector<CPoint> CIntersect::calcShapeInsPoint(const CShape& s1, const CShape
 	}
 }
 
-// the main pipeline: loop the inputs and fill in _insp2shapes
+// the main pipeline: loop the inputs and fill in _insp2shapes or _insPoints
 // return the total count of intersect points
 // need: _k2lines and _circles have been filled
 int CIntersect::cntTotalInsPoint()
