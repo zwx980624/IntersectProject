@@ -19,7 +19,7 @@ void CIntersect::inputShapes(std::istream& in) {
 			int x0, y0, r;
 			in >> x0 >> y0 >> r;
 			CCircle circ(x0, y0, r);
-			_circles.insert(circ);
+			_circles.push_back(circ);
 		}
 	}
 }

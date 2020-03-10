@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include<math.h>
+#include <unordered_map>
 #define EPS 1e-8
 
 class CPoint {
@@ -11,8 +13,17 @@ public:
 	CPoint(double x, double y) :_x(x), _y(y) {}
 	bool operator < (const CPoint & rhs) const;
 	bool operator == (const CPoint & rhs) const;
-	double x() { return _x; }
-	double y() { return _y; }
+	double x() const { return _x; }
+	double y() const { return _y; }
+};
+
+class PointHash
+{
+public:
+	std::size_t operator()(const CPoint& c) const
+	{
+		return std::hash<double>()(c.x()) + (std::hash<double>()(c.y()) << 16);
+	}
 };
 
 class CSlope {
@@ -28,6 +39,15 @@ public:
 	bool operator == (const CSlope & rhs) const;
 	bool isInf() const { return _isInf; }
 	double val() const { return _k; }
+};
+
+class SlopeHash
+{
+public:
+	std::size_t operator()(const CSlope& s) const
+	{
+		return std::hash<bool>()(s.isInf()) + (std::hash<double>()(s.val()) << 16);
+	}
 };
 
 class CBias {

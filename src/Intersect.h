@@ -3,15 +3,18 @@
 #include <set>
 #include <vector>
 #include <iostream>
+#include <unordered_map>
+#include <unordered_set>
 #include "Shape.h"
 
 class CIntersect {
 private:
 	std::vector<CLine> _lines;
-	std::map<CSlope, std::vector<CLine> > _k2lines;
-	std::set<CCircle> _circles;
-	std::map<CPoint, std::vector<int> > _insp2shapesId;
-	std::set<CPoint> _insPoints;
+	std::unordered_map<CSlope, std::vector<CLine>, SlopeHash> _k2lines;
+	std::vector<CCircle> _circles;
+	//std::map<CPoint, std::vector<int> > _insp2shapesId;
+	std::unordered_map<CPoint, std::vector<int>, PointHash > _insp2shapesId;
+	std::unordered_set<CPoint, PointHash> _insPoints;
 
 public:
 	void inputShapes(std::istream& in);
