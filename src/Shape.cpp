@@ -116,7 +116,7 @@ CCircle::CCircle(int x0, int y0, int r) : CShape("Circle"), _x0(x0), _y0(y0), _r
 	_F = _x0 * _x0 + _y0 * _y0 - _r * _r;
 }
 
-inline bool CRay::crossInRange(double cx, double cy) const
+bool CRay::crossInRange(double cx, double cy) const
 {
 	if (k().isInf()) {
 		if (dcmp(cy, y1())*dcmp(y2(), y1()) != -1) {
@@ -131,7 +131,7 @@ inline bool CRay::crossInRange(double cx, double cy) const
 	return false;
 }
 
-inline bool CSeg::crossInRange(double cx, double cy) const 
+bool CSeg::crossInRange(double cx, double cy) const 
 {
 	if (k().isInf()) {
 		if (dcmp(cy, y1())*dcmp(y2(), y1()) != -1 && 
