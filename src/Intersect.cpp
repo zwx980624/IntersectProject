@@ -15,6 +15,20 @@ void CIntersect::inputShapes(std::istream& in) {
 			_k2lines[line.k()].push_back(line);
 			_lines.push_back(line);
 		}
+		else if (shape == "R") {
+			int x1, y1, x2, y2;
+			in >> x1 >> y1 >> x2 >> y2;
+			CLine ray(x1, y1, x2, y2, "Ray");
+			_k2lines[ray.k()].push_back(ray);
+			_lines.push_back(ray);
+		}
+		else if (shape == "S") {
+			int x1, y1, x2, y2;
+			in >> x1 >> y1 >> x2 >> y2;
+			CLine seg(x1, y1, x2, y2, "Seg");
+			_k2lines[seg.k()].push_back(seg);
+			_lines.push_back(seg);
+		}
 		else {
 			int x0, y0, r;
 			in >> x0 >> y0 >> r;
@@ -108,7 +122,7 @@ std::vector<CPoint> calcInsCircLine(const CShape& circ, const CShape& line)
 // special need: if s1, s2 are CLine. They cannot be parallel.
 std::vector<CPoint> CIntersect::calcShapeInsPoint(const CShape& s1, const CShape& s2) const
 {
-	if (s1.type() == "Line" && s2.type() == "Line") {
+	if (s1.typeLine() && s2.typeLine()) {
 		//if (s1.A()*s2.B() - s2.A()*s1.B() == 0) {
 		//	return vector<CPoint>();
 		//}
@@ -121,7 +135,7 @@ std::vector<CPoint> CIntersect::calcShapeInsPoint(const CShape& s1, const CShape
 		return ret;
 	}
 	else {
-		if (s1.type() == "Circle" && s2.type() == "Line") {
+		if (s1.type() == "Circle" && s2.typeLine()) {
 			std::vector<CPoint> ret;
 			std::vector<CPoint> get = calcInsCircLine(s1, s2);
 			for (int i = 0; i < get.size(); ++i) {
@@ -131,7 +145,7 @@ std::vector<CPoint> CIntersect::calcShapeInsPoint(const CShape& s1, const CShape
 			}
 			return ret;
 		}
-		else if (s1.type() == "Line" && s2.type() == "Circle") {
+		else if (s1.typeLine() && s2.type() == "Circle") {
 			std::vector<CPoint> ret;
 			std::vector<CPoint> get = calcInsCircLine(s2, s1);
 			for (int i = 0; i < get.size(); ++i) {
@@ -164,15 +178,18 @@ int CIntersect::cntTotalInsPoint()
 			set<int> can_skip_id; // use this to record which line do not need calculate.
 			for (auto oit = over.begin(); oit != over.end(); ++oit) {
 				if (can_skip_id.find(oit->id()) == can_skip_id.end()) { // cannot skip
-					CPoint point = calcShapeInsPoint(*sit, *oit)[0]; // must intersect
-					if (_insp2shapesId.find(point) == _insp2shapesId.end()) { // new cross point
-						_insp2shapesId[point].push_back(sit->id());
-						_insp2shapesId[point].push_back(oit->id());
-					}
-					else { // cross point already exists
-						vector<int>& sl = _insp2shapesId[point];
-						can_skip_id.insert(sl.begin(), sl.end());
-						_insp2shapesId[point].push_back(sit->id());
+					auto vpoint = calcShapeInsPoint(*sit, *oit);
+					if (vpoint.size() != 0) {
+						CPoint point = calcShapeInsPoint(*sit, *oit)[0]; 
+						if (_insp2shapesId.find(point) == _insp2shapesId.end()) { // new cross point
+							_insp2shapesId[point].push_back(sit->id());
+							_insp2shapesId[point].push_back(oit->id());
+						}
+						else { // cross point already exists
+							vector<int>& sl = _insp2shapesId[point];
+							can_skip_id.insert(sl.begin(), sl.end());
+							_insp2shapesId[point].push_back(sit->id());
+						}
 					}
 				}
 			}
