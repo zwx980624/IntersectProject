@@ -4,6 +4,8 @@
 #include <unordered_map>
 #define EPS 1e-8
 
+int dcmp(double d1, double d2);
+
 class CPoint {
 private:
 	double _x;
@@ -84,10 +86,15 @@ public:
 	inline virtual CSlope k() const { return CSlope(0.0); }
 	inline virtual CBias b() const { return CBias(0.0); }
 	inline int id() const { return _id; }
+	inline virtual bool crossInRange(double cx, double cy) const { return true; }
 };
 
 class CLine: public CShape {
 private:
+	double _x1;
+	double _y1;
+	double _x2;
+	double _y2;
 	double _A;
 	double _B;
 	double _C;
@@ -102,6 +109,22 @@ public:
 	inline virtual double A() const { return _A; }
 	inline virtual double B() const  { return _B; }
 	inline virtual double C() const  { return _C; }
+	inline virtual double x1() const { return _x1; }
+	inline virtual double y1() const { return _y1; }
+	inline virtual double x2() const { return _x2; }
+	inline virtual double y2() const { return _y2; }
+};
+
+class CRay : public CLine {
+public:
+	CRay(int x1, int y1, int x2, int y2) :CLine(x1, y1, x2, y2) {}
+	inline virtual bool crossInRange(double cx, double cy) const;
+};
+
+class CSeg : public CLine {
+public:
+	CSeg(int x1, int y1, int x2, int y2) :CLine(x1, y1, x2, y2) {}
+	inline virtual bool crossInRange(double cx, double cy) const;
 };
 
 class CCircle : public CShape {

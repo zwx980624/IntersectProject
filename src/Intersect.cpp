@@ -115,15 +115,31 @@ std::vector<CPoint> CIntersect::calcShapeInsPoint(const CShape& s1, const CShape
 		double x = (s2.C()*s1.B() - s1.C()*s2.B()) / (s1.A()*s2.B() - s2.A()*s1.B());
 		double y = (s2.C()*s1.A() - s1.C()*s2.A()) / (s1.B()*s2.A() - s2.B()*s1.A());
 		vector<CPoint> ret;
-		ret.push_back(CPoint(x, y));
+		if (s1.crossInRange(x, y) && s2.crossInRange(x, y)) {
+			ret.push_back(CPoint(x, y));
+		}
 		return ret;
 	}
 	else {
 		if (s1.type() == "Circle" && s2.type() == "Line") {
-			return calcInsCircLine(s1, s2);
+			std::vector<CPoint> ret;
+			std::vector<CPoint> get = calcInsCircLine(s1, s2);
+			for (int i = 0; i < get.size(); ++i) {
+				if (s2.crossInRange(get[i].x(), get[i].y())) {
+					ret.push_back(get[i]);
+				}
+			}
+			return ret;
 		}
 		else if (s1.type() == "Line" && s2.type() == "Circle") {
-			return calcInsCircLine(s2, s1);
+			std::vector<CPoint> ret;
+			std::vector<CPoint> get = calcInsCircLine(s2, s1);
+			for (int i = 0; i < get.size(); ++i) {
+				if (s1.crossInRange(get[i].x(), get[i].y())) {
+					ret.push_back(get[i]);
+				}
+			}
+			return ret;
 		}
 		else { // 2 circles
 			CLine line(s1.D() - s2.D(), s1.E() - s2.E(), s1.F() - s2.F());

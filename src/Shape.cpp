@@ -1,5 +1,17 @@
 #include "Shape.h"
 
+int dcmp(double d1, double d2) {
+	if (d1 - d2 > EPS) {
+		return 1;
+	}
+	else if (d2 - d1 > EPS) {
+		return -1;
+	}
+	else {
+		return 0;
+	}
+}
+
 bool CPoint::operator < (const CPoint & rhs) const 
 {
 	if (rhs._x - _x > EPS) {
@@ -62,6 +74,10 @@ bool CSlope::operator==(const CSlope & rhs) const
 
 CLine::CLine(int x1, int y1, int x2, int y2): CShape("Line")
 {
+	_x1 = (double)x1;
+	_x2 = (double)x2;
+	_y1 = (double)y1;
+	_y2 = (double)y2;
 	_A = (double)y2 - y1;
 	_B = (double)x1 - x2;
 	_C = (double)y1 * x2 - (double)x1 * y2;
@@ -99,3 +115,36 @@ CCircle::CCircle(int x0, int y0, int r) : CShape("Circle"), _x0(x0), _y0(y0), _r
 	_E = -2 * _y0;
 	_F = _x0 * _x0 + _y0 * _y0 - _r * _r;
 }
+
+inline bool CRay::crossInRange(double cx, double cy) const
+{
+	if (k().isInf()) {
+		if (dcmp(cy, y1())*dcmp(y2(), y1()) != -1) {
+			return true;
+		}
+	}
+	else {
+		if (dcmp(cx, x1())*dcmp(x2(), x1()) != -1) {
+			return true;
+		}
+	}
+	return false;
+}
+
+inline bool CSeg::crossInRange(double cx, double cy) const 
+{
+	if (k().isInf()) {
+		if (dcmp(cy, y1())*dcmp(y2(), y1()) != -1 && 
+				dcmp(cy, y2())*dcmp(y1(), y2()) != -1) {
+			return true;
+		}
+	}
+	else {
+		if (dcmp(cx, x1())*dcmp(x2(), x1()) != -1 &&
+				dcmp(cx, x2())*dcmp(x1(), x2()) != -1) {
+			return true;
+		}
+	}
+	return false;
+}
+
