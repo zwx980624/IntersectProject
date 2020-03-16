@@ -248,7 +248,7 @@ namespace test
 	TEST_CLASS(test_cnt_intersect)
 	{
 	public:
-
+		/*
 		TEST_METHOD(TestMethod1)
 		{
 			// one single line
@@ -431,6 +431,322 @@ namespace test
 			ins.inputShapes(fin);
 			int cnt = ins.cntTotalInsPoint();
 			Assert::AreEqual(10, cnt);
+		}
+		*/
+		TEST_METHOD(TestMethod12)
+		{
+			CRay t1 = CRay(0, 0, 0, 1);
+			CCircle c = CCircle(0,0,2);
+			CIntersect ins;
+			std::vector<CPoint> ans;
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(0,2)==ans[0]);
+
+			t1 = CRay(0, 0, 1, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+
+			t1 = CRay(0, 0, 1, 1);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(sqrt(2), sqrt(2)) == ans[0]);
+
+
+			t1 = CRay(0, 0, 0, -1);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(0, -2) == ans[0]);
+
+
+			t1 = CRay(0, 0, -1, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(-2, 0) == ans[0]);
+
+			t1 = CRay(0, 0, -1, -1);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(-sqrt(2), -sqrt(2)) == ans[0]);
+
+		}
+
+		TEST_METHOD(TestMethod13)
+		{
+			
+			CCircle c = CCircle(0, 0, 2);
+			CIntersect ins;
+			std::vector<CPoint> ans;
+
+			CRay t1 = CRay(0, 3, 0, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(2, (int)ans.size());
+			Assert::AreEqual(true, CPoint(0, 2) == ans[0]);
+			Assert::AreEqual(true, CPoint(0, -2) == ans[1]);
+
+			t1 = CRay(3, 0, 0, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(2, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+			Assert::AreEqual(true, CPoint(-2, 0) == ans[1]);
+
+			t1 = CRay(2, 2, 0, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(2, (int)ans.size());
+			Assert::AreEqual(true, CPoint(sqrt(2), sqrt(2)) == ans[0]);
+			Assert::AreEqual(true, CPoint(-sqrt(2), -sqrt(2)) == ans[1]);
+		}
+
+		TEST_METHOD(TestMethod14)
+		{
+
+			CCircle c = CCircle(0, 0, 2);
+			CIntersect ins;
+			std::vector<CPoint> ans;
+
+			CRay t1 = CRay(2, 2, -2, 2);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(0, 2) == ans[0]);
+
+			t1 = CRay(2, 2, 2, -2);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+
+			t1 = CRay(2, 2, 3, 3);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(0, (int)ans.size());
+
+			t1 = CRay(2, 0, 0, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(2, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+			Assert::AreEqual(true, CPoint(-2, 0) == ans[1]);
+
+			t1 = CRay(2, 0, 3, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+
+			t1 = CRay(2, 0, 2, 2);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+		}
+
+		TEST_METHOD(TestMethod15)
+		{
+			CRay t1 = CRay(0, 0, 0, 1);
+			CCircle c = CCircle(0,0,2);
+			CIntersect ins;
+			std::vector<CPoint> ans;
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(0,2)==ans[0]);
+
+			t1 = CRay(0, 0, 1, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+
+			t1 = CRay(0, 0, 1, 1);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(sqrt(2), sqrt(2)) == ans[0]);
+
+
+			t1 = CRay(0, 0, 0, -1);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(0, -2) == ans[0]);
+
+
+			t1 = CRay(0, 0, -1, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(-2, 0) == ans[0]);
+
+			t1 = CRay(0, 0, -1, -1);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(-sqrt(2), -sqrt(2)) == ans[0]);
+
+		}
+
+		TEST_METHOD(TestMethod16)
+		{
+			
+			CCircle c = CCircle(0, 0, 2);
+			CIntersect ins;
+			std::vector<CPoint> ans;
+
+			CRay t1 = CRay(0, 3, 0, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(2, (int)ans.size());
+			Assert::AreEqual(true, CPoint(0, 2) == ans[0]);
+			Assert::AreEqual(true, CPoint(0, -2) == ans[1]);
+
+			t1 = CRay(3, 0, 0, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(2, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+			Assert::AreEqual(true, CPoint(-2, 0) == ans[1]);
+
+			t1 = CRay(2, 2, 0, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(2, (int)ans.size());
+			Assert::AreEqual(true, CPoint(sqrt(2), sqrt(2)) == ans[0]);
+			Assert::AreEqual(true, CPoint(-sqrt(2), -sqrt(2)) == ans[1]);
+		}
+
+		TEST_METHOD(TestMethod17)
+		{
+
+			CCircle c = CCircle(0, 0, 2);
+			CIntersect ins;
+			std::vector<CPoint> ans;
+
+			CRay t1 = CRay(2, 2, -2, 2);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(0, 2) == ans[0]);
+
+			t1 = CRay(2, 2, 2, -2);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+
+			t1 = CRay(2, 2, 3, 3);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(0, (int)ans.size());
+
+			t1 = CRay(2, 0, 0, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(2, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+			Assert::AreEqual(true, CPoint(-2, 0) == ans[1]);
+
+			t1 = CRay(2, 0, 3, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+
+			t1 = CRay(2, 0, 2, 2);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+		}
+
+		TEST_METHOD(TestMethod18)
+		{
+
+			CCircle c = CCircle(0, 0, 2);
+			CIntersect ins;
+			std::vector<CPoint> ans;
+
+			CSeg t1 = CSeg(0, 0, 1, 1);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(0, (int)ans.size());
+
+			t1 = CSeg(0, 3, 0, 4);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(0, (int)ans.size());
+
+			t1 = CSeg(0, 3, 1, 3);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(0, (int)ans.size());
+
+		}
+		
+		TEST_METHOD(TestMethod19)
+		{
+			CCircle c = CCircle(0, 0, 2);
+			CIntersect ins;
+			std::vector<CPoint> ans;
+
+			CSeg t1 = CSeg(0, 2, 0, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(0, 2) == ans[0]);
+
+			t1 = CSeg(0, 2, 0, 3);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(0, 2) == ans[0]);
+
+			t1 = CSeg(0, 2, 2, 2);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(0, 2) == ans[0]);
+
+
+			t1 = CSeg(-2, 2, 2, 2);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(0, 2) == ans[0]);
+
+			t1 = CSeg(2, 2, 2, -2);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+
+			t1 = CSeg(2, 2, 2, -2);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+
+			t1 = CSeg(0, 0, 3, 3);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(1, (int)ans.size());
+			Assert::AreEqual(true, CPoint(sqrt(2), sqrt(2)) == ans[0]);
+
+		}
+
+		TEST_METHOD(TestMethod20)
+		{
+
+			CCircle c = CCircle(0, 0, 2);
+			CIntersect ins;
+			std::vector<CPoint> ans;
+
+			CSeg t1 = CSeg(0, 2, 0, -2);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(2, (int)ans.size());
+			Assert::AreEqual(true, CPoint(0, 2) == ans[0]);
+			Assert::AreEqual(true, CPoint(0, -2) == ans[1]);
+
+			t1 = CSeg(2, 0, -2, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(2, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+			Assert::AreEqual(true, CPoint(-2, 0) == ans[1]);
+
+
+			t1 = CSeg(2, 0, 0, 2);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(2, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+			Assert::AreEqual(true, CPoint(0, 2) == ans[1]);
+
+			t1 = CSeg(0, 3, 0, -3);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(2, (int)ans.size());
+			Assert::AreEqual(true, CPoint(0, 2) == ans[0]);
+			Assert::AreEqual(true, CPoint(0, -2) == ans[1]);
+
+			t1 = CSeg(3, 0, -3, 0);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(2, (int)ans.size());
+			Assert::AreEqual(true, CPoint(2, 0) == ans[0]);
+			Assert::AreEqual(true, CPoint(-2, 0) == ans[1]);
+
+			t1 = CSeg(3, 3, -3, -3);
+			ans = ins.calcShapeInsPoint(c, t1);
+			Assert::AreEqual(2, (int)ans.size());
+			Assert::AreEqual(true, CPoint(sqrt(2), sqrt(2)) == ans[0]);
+			Assert::AreEqual(true, CPoint(-sqrt(2), -sqrt(2)) == ans[1]);
 		}
 	};
 }
