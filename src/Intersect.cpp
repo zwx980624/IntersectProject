@@ -197,10 +197,9 @@ int CIntersect::cntTotalInsPoint()
 		over.insert(over.end(), s.begin(), s.end());
 	}
 
-	if (_circles.size() != 0) { // if there are circles. extract keys to one set.
-		for (auto mit = _insp2shapesId.begin(); mit != _insp2shapesId.end(); ++mit) {
-			_insPoints.insert(mit->first);
-		}
+
+	for (auto mit = _insp2shapesId.begin(); mit != _insp2shapesId.end(); ++mit) {
+		_insPoints.insert(mit->first);
 	}
 
 	// circles violent loop
