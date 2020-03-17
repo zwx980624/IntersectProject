@@ -87,6 +87,7 @@ public:
 	inline virtual CBias b() const { return CBias(0.0); }
 	inline int id() const { return _id; }
 	virtual bool crossInRange(double cx, double cy) const { return true; }
+	inline bool typeLine() const { return _type == "Line" || _type == "Ray" || _type == "Seg"; }
 };
 
 class CLine: public CShape {
@@ -100,8 +101,9 @@ private:
 	double _C;
 	CSlope _k;
 	CBias  _b;
+
 public:
-	CLine(int x1, int y1, int x2, int y2);
+	CLine(int x1, int y1, int x2, int y2, std::string type = "Line");
 	CLine(double A, double B, double C);
 	inline virtual CSlope k() const { return _k; }
 	inline virtual CBias b() const { return _b; }
@@ -113,17 +115,6 @@ public:
 	inline virtual double y1() const { return _y1; }
 	inline virtual double x2() const { return _x2; }
 	inline virtual double y2() const { return _y2; }
-};
-
-class CRay : public CLine {
-public:
-	CRay(int x1, int y1, int x2, int y2) :CLine(x1, y1, x2, y2) {}
-	virtual bool crossInRange(double cx, double cy) const;
-};
-
-class CSeg : public CLine {
-public:
-	CSeg(int x1, int y1, int x2, int y2) :CLine(x1, y1, x2, y2) {}
 	virtual bool crossInRange(double cx, double cy) const;
 };
 

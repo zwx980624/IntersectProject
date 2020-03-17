@@ -72,7 +72,7 @@ bool CSlope::operator==(const CSlope & rhs) const
 	return !(this->operator<(rhs)) && !(rhs.operator<(*this));
 }
 
-CLine::CLine(int x1, int y1, int x2, int y2): CShape("Line")
+CLine::CLine(int x1, int y1, int x2, int y2, std::string type): CShape(type)
 {
 	_x1 = (double)x1;
 	_x2 = (double)x2;
@@ -116,35 +116,40 @@ CCircle::CCircle(int x0, int y0, int r) : CShape("Circle"), _x0(x0), _y0(y0), _r
 	_F = _x0 * _x0 + _y0 * _y0 - _r * _r;
 }
 
-bool CRay::crossInRange(double cx, double cy) const
+bool CLine::crossInRange(double cx, double cy) const
 {
-	if (k().isInf()) {
-		if (dcmp(cy, y1())*dcmp(y2(), y1()) != -1) {
-			return true;
+	if (type() == "Line") {
+		return true;
+	}
+	else if (type() == "Ray") {
+		if (k().isInf()) {
+			if (dcmp(cy, y1())*dcmp(y2(), y1()) != -1) {
+				return true;
+			}
 		}
+		else {
+			if (dcmp(cx, x1())*dcmp(x2(), x1()) != -1) {
+				return true;
+			}
+		}
+		return false;
 	}
 	else {
-		if (dcmp(cx, x1())*dcmp(x2(), x1()) != -1) {
-			return true;
+		if (k().isInf()) {
+			if (dcmp(cy, y1())*dcmp(y2(), y1()) != -1 &&
+				dcmp(cy, y2())*dcmp(y1(), y2()) != -1) {
+				return true;
+			}
 		}
+		else {
+			if (dcmp(cx, x1())*dcmp(x2(), x1()) != -1 &&
+				dcmp(cx, x2())*dcmp(x1(), x2()) != -1) {
+				return true;
+			}
+		}
+		return false;
 	}
-	return false;
 }
 
-bool CSeg::crossInRange(double cx, double cy) const 
-{
-	if (k().isInf()) {
-		if (dcmp(cy, y1())*dcmp(y2(), y1()) != -1 && 
-				dcmp(cy, y2())*dcmp(y1(), y2()) != -1) {
-			return true;
-		}
-	}
-	else {
-		if (dcmp(cx, x1())*dcmp(x2(), x1()) != -1 &&
-				dcmp(cx, x2())*dcmp(x1(), x2()) != -1) {
-			return true;
-		}
-	}
-	return false;
-}
+
 
