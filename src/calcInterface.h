@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 #include <utility>
-
+#include <stdexcept>
 
 #ifdef IMPORT_DLL
 #else

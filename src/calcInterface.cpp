@@ -4,14 +4,20 @@ using namespace std;
 
 int guiProcess(vector<pair<double, double>>* points, string msg)
 {
-	CIntersect ins;
-	istringstream in(msg);
-	ins.inputShapes(in);
-	int cnt = ins.cntTotalInsPoint();
-	std::unordered_set<CPoint, PointHash> pointsSet = ins.getInsPoints();
-	for (auto sit = pointsSet.begin(); sit != pointsSet.end(); ++sit) {
-		CPoint tmp = *sit;
-		points->push_back(make_pair(tmp.x(), tmp.y()));
+	int cnt = 0;
+	try {
+		CIntersect ins;
+		istringstream in(msg);
+		ins.inputShapes(in);
+		cnt = ins.cntTotalInsPoint();
+		std::unordered_set<CPoint, PointHash> pointsSet = ins.getInsPoints();
+		for (auto sit = pointsSet.begin(); sit != pointsSet.end(); ++sit) {
+			CPoint tmp = *sit;
+			points->push_back(make_pair(tmp.x(), tmp.y()));
+		}
+	}
+	catch (std::exception ex) {
+		throw ex;
 	}
 	return cnt;
 }
