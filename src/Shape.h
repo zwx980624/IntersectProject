@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include<math.h>
+#include<cmath>
 #include <unordered_map>
 #define EPS 1e-8
 
@@ -86,7 +86,7 @@ public:
 	inline virtual CSlope k() const { return CSlope(0.0); }
 	inline virtual CBias b() const { return CBias(0.0); }
 	inline int id() const { return _id; }
-	inline virtual bool crossInRange(double cx, double cy) const { return true; }
+	virtual bool crossInRange(double cx, double cy) const { return true; }
 };
 
 class CLine: public CShape {
@@ -118,13 +118,13 @@ public:
 class CRay : public CLine {
 public:
 	CRay(int x1, int y1, int x2, int y2) :CLine(x1, y1, x2, y2) {}
-	inline virtual bool crossInRange(double cx, double cy) const;
+	virtual bool crossInRange(double cx, double cy) const;
 };
 
 class CSeg : public CLine {
 public:
 	CSeg(int x1, int y1, int x2, int y2) :CLine(x1, y1, x2, y2) {}
-	inline virtual bool crossInRange(double cx, double cy) const;
+	virtual bool crossInRange(double cx, double cy) const;
 };
 
 class CCircle : public CShape {
