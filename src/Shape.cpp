@@ -72,6 +72,31 @@ bool CSlope::operator==(const CSlope & rhs) const
 	return !(this->operator<(rhs)) && !(rhs.operator<(*this));
 }
 
+bool CBias::operator<(const CBias& rhs) const
+{
+	if (_isNan) {
+		return false;
+	}
+	else {
+		if (rhs._isNan) {
+			return true;
+		}
+		else {
+			if (rhs._b - _b > EPS) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+}
+
+bool CBias::operator==(const CBias& rhs) const
+{
+	return !(this->operator<(rhs)) && !(rhs.operator<(*this));
+}
+
 CLine::CLine(int x1, int y1, int x2, int y2, std::string type): CShape(type)
 {
 	_x1 = (double)x1;

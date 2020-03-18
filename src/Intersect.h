@@ -7,6 +7,9 @@
 #include <unordered_set>
 #include "Shape.h"
 #include "myException.h"
+#define lrange -100000
+#define rrange 100000
+
 
 class CIntersect {
 private:
@@ -17,6 +20,7 @@ private:
 	std::unordered_map<CPoint, std::vector<int>, PointHash > _insp2shapesId;
 	std::unordered_set<CPoint, PointHash> _insPoints;
 	std::unordered_map<string, int> _shapes;
+	std::unordered_map<pair<CSlope, CBias>, std::vector<CLine>, KbHash> _kb2lines;
 
 public:
 	void inputShapes(std::istream& in);

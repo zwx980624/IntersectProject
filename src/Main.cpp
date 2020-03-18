@@ -23,7 +23,9 @@ int main(int argc, char** argv) {
 		cout << "Usage: intersect.exe -i input.txt -o output.txt\n";
 		exit(0);
 	}
+	
 	ifstream fin(infile);
+
 	if (!fin) {
 		cout << "input file cannot open\n";
 		exit(0);
@@ -37,9 +39,20 @@ int main(int argc, char** argv) {
 		e.what();
 		exit(0);
 	}
-	int cnt = ins.cntTotalInsPoint();
+
+
+
+	int cnt = 0;
+	try {
+		cnt = ins.cntTotalInsPoint();
+	}
+	catch (exception e) {
+		e.what();
+ 		exit(0);
+	}
 	ofstream fout(outfile);
 	fout << cnt;
+	cout << cnt << endl;
 	clock_t toc = clock();
 	cout << "time: " << ((double)toc - tic) * 1.0 / CLOCKS_PER_SEC << endl;
 	exit(0);

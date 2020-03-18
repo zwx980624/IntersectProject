@@ -3,10 +3,8 @@
 #include <string>
 #include <sstream>
 using namespace std;
-#define lrange -100000
-#define rrange 100000
 
-bool out_range(int x) {
+inline bool out_range(int x) {
 	if (x <= lrange || x >= rrange) {
 		return true;
 	}
@@ -66,11 +64,35 @@ void CIntersect::inputShapes(std::istream& in) {
 				if (out_range(x1) || out_range(x2) || out_range(y1) || out_range(y2)) {
 					throw OutRangeException(i, str);
 				}
+				if (x1 == x2 && y1 == y2) {
+					throw IllegalLineException(i, str);
+				}
 				CLine line(x1, y1, x2, y2);
 				string s = op + " " + to_string(x1) + " " + to_string(y1) + " " + to_string(x2) + " " + to_string(y2);
 				if (!addShapes(s)) {
 					throw ShapeRepeatedException(i, str);
 				}
+				pair<CSlope, CBias> kb = make_pair(line.k(), line.b());
+				if (line.k().isInf()) {
+					kb = make_pair(line.k(), CBias((double)x1));
+				}
+				if (_kb2lines[kb].size() != 0) {
+					CLine coverl = _kb2lines[kb][0];
+					int cx1 = (int)(coverl.x1() + 0.4);
+					int cy1 = (int)(coverl.y1() + 0.4);
+					int cx2 = (int)(coverl.x2() + 0.4);
+					int cy2 = (int)(coverl.y2() + 0.4);
+					if (coverl.type() == "Seg") {
+						op = "S";
+					}
+					else if (coverl.type() == "Ray") {
+						op = "R";
+					}
+					string covers = op + " " + to_string(cx1) + " " + to_string(cy1)
+						+ " " + to_string(cx2) + " " + to_string(cy2);
+					throw ShapeCoverException(i, s, covers);
+				}
+				_kb2lines[kb].push_back(line);
 				_k2lines[line.k()].push_back(line);
 				_lines.push_back(line);
 			}
@@ -80,11 +102,64 @@ void CIntersect::inputShapes(std::istream& in) {
 				if (out_range(x1) || out_range(x2) || out_range(y1) || out_range(y2)) {
 					throw OutRangeException(i, str);
 				}
+				if (x1 == x2 && y1 == y2) {
+					throw IllegalLineException(i, str);
+				}
 				string s = op + " " + to_string(x1) + " " + to_string(y1) + " " + to_string(x2) + " " + to_string(y2);
 				if (!addShapes(s)) {
 					throw ShapeRepeatedException(i, str);
 				}
 				CLine ray(x1, y1, x2, y2, "Ray");
+				pair<CSlope, CBias> kb = make_pair(ray.k(), ray.b());
+				if (ray.k().isInf()) {
+					kb = make_pair(ray.k(), CBias((double)x1));
+				}
+				vector<CLine> lines = _kb2lines[kb];
+				for (int j = 0; j < lines.size(); j++) {
+					CLine coverl = lines[0];
+					int cx1 = (int)(coverl.x1() + 0.4);
+					int cy1 = (int)(coverl.y1() + 0.4);
+					int cx2 = (int)(coverl.x2() + 0.4);
+					int cy2 = (int)(coverl.y2() + 0.4);
+					if (coverl.type() == "Line") {
+						string covers = "L " + to_string(cx1) + " " + to_string(cy1)
+							+ " " + to_string(cx2) + " " + to_string(cy2);
+						throw ShapeCoverException(i, s, covers);
+					}
+					else if (coverl.type() == "Ray") {
+						if (dcmp(cx1, x1) == 0 && dcmp(cy1, y1) == 0) {
+							_insp2shapesId[CPoint(cx1, cy1)].push_back(coverl.id());
+							_insp2shapesId[CPoint(cx1, cy1)].push_back(ray.id());
+						}
+						if (dcmp(cx2, cx1) * dcmp(x2, x1) > 0 || dcmp(cy2, cy1) * dcmp(y2, y1) > 0) {
+							string covers = "R " + to_string(cx1) + " " + to_string(cy1)
+								+ " " + to_string(cx2) + " " + to_string(cy2);
+							throw ShapeCoverException(i, s, covers);
+						}
+						else if (coverl.crossInRange(x1, y1) && !(CPoint(x1, y1) == CPoint(cx1, cy1))){
+							string covers = "R " + to_string(cx1) + " " + to_string(cy1)
+								+ " " + to_string(cx2) + " " + to_string(cy2);
+							throw ShapeCoverException(i, s, covers);
+						}
+					}
+					else{
+						if (dcmp(cx1, x1) == 0 && dcmp(cy1, y1) == 0) {
+							_insp2shapesId[CPoint(cx1, cy1)].push_back(coverl.id());
+							_insp2shapesId[CPoint(cx1, cy1)].push_back(ray.id());
+						}
+						if (dcmp(cx2, x1) == 0 && dcmp(cy2, y1) == 0) {
+							_insp2shapesId[CPoint(cx2, cy2)].push_back(coverl.id());
+							_insp2shapesId[CPoint(cx2, cy2)].push_back(ray.id());
+						}
+						if ((ray.crossInRange(cx1, cy1) && !(dcmp(x1, cx1) == 0 && dcmp(y1, cy1) == 0)
+							|| ray.crossInRange(cx2, cy2) && !(dcmp(x1, cx2) == 0 && dcmp(y1, cy2) == 0))) {
+							string covers = "S " + to_string(cx1) + " " + to_string(cy1)
+								+ " " + to_string(cx2) + " " + to_string(cy2);
+							throw ShapeCoverException(i, s, covers);
+						}
+					}
+				}
+				_kb2lines[kb].push_back(ray);
 				_k2lines[ray.k()].push_back(ray);
 				_lines.push_back(ray);
 			}
@@ -94,11 +169,91 @@ void CIntersect::inputShapes(std::istream& in) {
 				if (out_range(x1) || out_range(x2) || out_range(y1) || out_range(y2)) {
 					throw OutRangeException(i, str);
 				}
+				if (x1 == x2 && y1 == y2) {
+					throw IllegalLineException(i, str);
+				}
+				if (x1 == x2 && y1 > y2) {
+					int t = y1;
+					y1 = y2;
+					y2 = t;
+				}
+				else if (x1 > x2) {
+					int t = y1;
+					y1 = y2;
+					y2 = t;
+					t = x1;
+					x1 = x2;
+					x2 = t;
+				}
 				string s = op + " " + to_string(x1) + " " + to_string(y1) + " " + to_string(x2) + " " + to_string(y2);
 				if (!addShapes(s)) {
 					throw ShapeRepeatedException(i, str);
 				}
 				CLine seg(x1, y1, x2, y2, "Seg");
+				pair<CSlope, CBias> kb = make_pair(seg.k(), seg.b());
+				if (seg.k().isInf()) {
+					kb = make_pair(seg.k(), CBias((double)x1));
+				}
+				vector<CLine> lines = _kb2lines[kb];
+				for (int j = 0; j < lines.size(); j++) {
+					CLine coverl = lines[0];
+					int cx1 = (int)(coverl.x1() + 0.4);
+					int cy1 = (int)(coverl.y1() + 0.4);
+					int cx2 = (int)(coverl.x2() + 0.4);
+					int cy2 = (int)(coverl.y2() + 0.4);
+					if (coverl.type() == "Line") {
+						string covers = "L " + to_string(cx1) + " " + to_string(cy1)
+							+ " " + to_string(cx2) + " " + to_string(cy2);
+						throw ShapeCoverException(i, s, covers);
+					}
+					else if (coverl.type() == "Ray") {
+						if (dcmp(cx1, x1) == 0 && dcmp(cy1, y1) == 0) {
+							_insp2shapesId[CPoint(cx1, cy1)].push_back(coverl.id());
+							_insp2shapesId[CPoint(cx1, cy1)].push_back(seg.id());
+						}
+						if (dcmp(cx1, x2) == 0 && dcmp(cy1, y2) == 0) {
+							_insp2shapesId[CPoint(cx1, cy1)].push_back(coverl.id());
+							_insp2shapesId[CPoint(cx1, cy1)].push_back(seg.id());
+						}
+						if ((coverl.crossInRange(x1, y1) && !(dcmp(cx1, x1)==0 && dcmp(cy1, y1) == 0)
+							|| (coverl.crossInRange(x2, y2) && !(dcmp(cx1, x2) == 0 && dcmp(cy1, y2) == 0)))) {
+							string covers = "R " + to_string(cx1) + " " + to_string(cy1)
+								+ " " + to_string(cx2) + " " + to_string(cy2);
+							throw ShapeCoverException(i, s, covers);
+						}
+					}
+					else {
+						if (dcmp(cx1, x1) == 0 && dcmp(cy1, y1) == 0) {
+							_insp2shapesId[CPoint(cx1, cy1)].push_back(coverl.id());
+							_insp2shapesId[CPoint(cx1, cy1)].push_back(seg.id());
+						}
+						if (dcmp(cx1, x2) == 0 && dcmp(cy1, y2) == 0) {
+							_insp2shapesId[CPoint(cx1, cy1)].push_back(coverl.id());
+							_insp2shapesId[CPoint(cx1, cy1)].push_back(seg.id());
+						}
+						if (dcmp(cx2, x2) == 0 && dcmp(cy2, y2) == 0) {
+							_insp2shapesId[CPoint(cx2, cy2)].push_back(coverl.id());
+							_insp2shapesId[CPoint(cx2, cy2)].push_back(seg.id());
+						}
+						if (dcmp(cx2, x2) == 0 && dcmp(cy2, y2) == 0) {
+							_insp2shapesId[CPoint(cx2, cy2)].push_back(coverl.id());
+							_insp2shapesId[CPoint(cx2, cy2)].push_back(seg.id());
+						}
+						if (cx1 == x1 && x1 == x2) {
+							if ((cy2 > y1 && cy2 <= y2) || (cy1 >= y1 && cy1 < y2) || (cy1 <= y1 && cy2 >= y2)) {
+								string covers = "S " + to_string(cx1) + " " + to_string(cy1)
+									+ " " + to_string(cx2) + " " + to_string(cy2);
+								throw ShapeCoverException(i, s, covers);
+							}
+						}
+						else if ((cx2 > x1 && cx2 <= x2) || (cx1 >= x1 && cx1 < x2) || (cx1 <= x1 && cx2 >= x2)){
+							string covers = "S " + to_string(cx1) + " " + to_string(cy1)
+								+ " " + to_string(cx2) + " " + to_string(cy2);
+							throw ShapeCoverException(i, s, covers);
+						}
+					}
+				}
+				_kb2lines[kb].push_back(seg);
 				_k2lines[seg.k()].push_back(seg);
 				_lines.push_back(seg);
 			}

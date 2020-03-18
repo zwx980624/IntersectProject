@@ -3,6 +3,7 @@
 #include "../src/Intersect.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <vector>
 
 
@@ -772,6 +773,103 @@ namespace test
 			Assert::AreEqual(2, (int)ans.size());
 			Assert::AreEqual(true, CPoint(sqrt(2), sqrt(2)) == ans[0]);
 			Assert::AreEqual(true, CPoint(-sqrt(2), -sqrt(2)) == ans[1]);
+		}
+
+		TEST_METHOD(TestMethod25)
+		{
+			// paralile
+			// 4
+			// L 0 0 0 1
+			// L 0 0 1 1
+			// L 1 0 1 2
+			// L 1 0 2 1
+			ifstream fin("../test/test19.txt");
+			if (!fin) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			ins.inputShapes(fin);
+			int cnt = ins.cntTotalInsPoint();
+			Assert::AreEqual(1, cnt);
+		}
+
+		TEST_METHOD(TestMethod26)
+		{
+			// paralile
+			// 4
+			// L 0 0 0 1
+			// L 0 0 1 1
+			// L 1 0 1 2
+			// L 1 0 2 1
+			ifstream fin("../test/test20.txt");
+			if (!fin) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			ins.inputShapes(fin);
+			int cnt = ins.cntTotalInsPoint();
+			Assert::AreEqual(1, cnt);
+		}
+
+		TEST_METHOD(TestMethod27)
+		{
+			// paralile
+			// 4
+			// L 0 0 0 1
+			// L 0 0 1 1
+			// L 1 0 1 2
+			// L 1 0 2 1
+			ifstream fin("../test/test21.txt");
+			if (!fin) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			ins.inputShapes(fin);
+			int cnt = ins.cntTotalInsPoint();
+			Assert::AreEqual(1, cnt);
+		}
+
+		TEST_METHOD(TestMethod28)
+		{
+			// paralile
+			// 4
+			// L 0 0 0 1
+			// L 0 0 1 1
+			// L 1 0 1 2
+			// L 1 0 2 1
+			ifstream fin("../test/test22.txt");
+			if (!fin) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			ins.inputShapes(fin);
+			int cnt = ins.cntTotalInsPoint();
+			Assert::AreEqual(10, cnt);
+		}
+
+		TEST_METHOD(TestMethod29)
+		{
+			// paralile
+			// 4
+			// L 0 0 0 1
+			// L 0 0 1 1
+			// L 1 0 1 2
+			// L 1 0 2 1
+			string strin = "2\nR 0 0 5 5\nR 6 6 -1 -1\n";
+			ShapeCoverException s(2, "R 6 6 -1 -1", "R 0 0 5 5");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
 		}
 	};
 }
