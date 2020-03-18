@@ -30,7 +30,13 @@ int main(int argc, char** argv) {
 	}
 	clock_t tic = clock();
 	CIntersect ins;
-	ins.inputShapes(fin);
+	try {
+		ins.inputShapes(fin);
+	}
+	catch (InputHandlerException e) {
+		e.what();
+		exit(0);
+	}
 	int cnt = ins.cntTotalInsPoint();
 	ofstream fout(outfile);
 	fout << cnt;

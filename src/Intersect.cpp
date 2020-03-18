@@ -1,40 +1,132 @@
 #include "Intersect.h"
-
+#include <regex>
+#include <string>
+#include <sstream>
 using namespace std;
+#define lrange -100000
+#define rrange 100000
+
+bool out_range(int x) {
+	if (x <= lrange || x >= rrange) {
+		return true;
+	}
+	return false;
+}
+
+bool CIntersect::addShapes(string shape) {
+	unordered_map<string, int>::iterator iter;
+	iter = _shapes.find(shape);
+	if (iter == _shapes.end()) {
+		_shapes[shape] = 1;
+		return true;
+	}
+	return false;
+}
 
 void CIntersect::inputShapes(std::istream& in) {
 	int N;
-	in >> N;
-	while (N--) {
-		string shape;
-		in >> shape;
-		if (shape == "L") {
-			int x1, y1, x2, y2;
-			in >> x1 >> y1 >> x2 >> y2;
-			CLine line(x1, y1, x2, y2);
-			_k2lines[line.k()].push_back(line);
-			_lines.push_back(line);
+	string str;
+	try {
+		getline(in, str);
+		N = stoi(str);
+	}
+	catch (exception e) {
+		throw ShapeNumberException("Can't read Correct N");
+	}
+	if (N <= 0 || N > 500000) {
+		throw ShapeNumberException("N is out of range");
+	}
+	try {
+		for (int i = 1; i <= N; i++) {
+			try {
+				while (true) {
+					if (!getline(in, str)) {
+						throw ShapeNumberException("the number of shapes is different from N");
+					}
+					if (str.size() != 0) {
+						break;
+					} 
+				}
+			}
+			catch (InputHandlerException e) {
+				throw e;
+			}
+
+			regex pattern("^\\s*([LRS](\\s+(-|\\+)?\\d+){4}|C(\\s+(-|\\+)?\\d+){3})\\s*$");
+			if (!regex_match(str, pattern)) {
+				throw IllegalFormatException(i, str);
+			}
+
+			istringstream shape(str);
+			string op, s;
+			shape >> op;
+			if (op == "L") {
+				int x1, y1, x2, y2;
+				shape >> x1 >> y1 >> x2 >> y2;
+				if (out_range(x1) || out_range(x2) || out_range(y1) || out_range(y2)) {
+					throw OutRangeException(i, str);
+				}
+				CLine line(x1, y1, x2, y2);
+				string s = op + " " + to_string(x1) + " " + to_string(y1) + " " + to_string(x2) + " " + to_string(y2);
+				if (!addShapes(s)) {
+					throw ShapeRepeatedException(i, str);
+				}
+				_k2lines[line.k()].push_back(line);
+				_lines.push_back(line);
+			}
+			else if (op == "R") {
+				int x1, y1, x2, y2;
+				shape >> x1 >> y1 >> x2 >> y2;
+				if (out_range(x1) || out_range(x2) || out_range(y1) || out_range(y2)) {
+					throw OutRangeException(i, str);
+				}
+				string s = op + " " + to_string(x1) + " " + to_string(y1) + " " + to_string(x2) + " " + to_string(y2);
+				if (!addShapes(s)) {
+					throw ShapeRepeatedException(i, str);
+				}
+				CLine ray(x1, y1, x2, y2, "Ray");
+				_k2lines[ray.k()].push_back(ray);
+				_lines.push_back(ray);
+			}
+			else if (op == "S") {
+				int x1, y1, x2, y2;
+				shape >> x1 >> y1 >> x2 >> y2;
+				if (out_range(x1) || out_range(x2) || out_range(y1) || out_range(y2)) {
+					throw OutRangeException(i, str);
+				}
+				string s = op + " " + to_string(x1) + " " + to_string(y1) + " " + to_string(x2) + " " + to_string(y2);
+				if (!addShapes(s)) {
+					throw ShapeRepeatedException(i, str);
+				}
+				CLine seg(x1, y1, x2, y2, "Seg");
+				_k2lines[seg.k()].push_back(seg);
+				_lines.push_back(seg);
+			}
+			else {
+				int x0, y0, r;
+				shape >> x0 >> y0 >> r; 
+				if (out_range(x0) || out_range(y0) || r <= 0 || r >= rrange) {
+					throw OutRangeException(i, str);
+				}
+				string s = op + " " + to_string(x0) + " " + to_string(y0) + " " + to_string(r);
+				if (!addShapes(s)) {
+					throw ShapeRepeatedException(i, str);
+				}
+				CCircle circ(x0, y0, r);
+				_circles.push_back(circ);
+			}
 		}
-		else if (shape == "R") {
-			int x1, y1, x2, y2;
-			in >> x1 >> y1 >> x2 >> y2;
-			CLine ray(x1, y1, x2, y2, "Ray");
-			_k2lines[ray.k()].push_back(ray);
-			_lines.push_back(ray);
+		while (true) {
+			if (!getline(in, str)) {
+				break;
+			}
+			if (str.size() != 0) {
+				throw ShapeNumberException("the number of shapes is different from N");
+			}
 		}
-		else if (shape == "S") {
-			int x1, y1, x2, y2;
-			in >> x1 >> y1 >> x2 >> y2;
-			CLine seg(x1, y1, x2, y2, "Seg");
-			_k2lines[seg.k()].push_back(seg);
-			_lines.push_back(seg);
-		}
-		else {
-			int x0, y0, r;
-			in >> x0 >> y0 >> r;
-			CCircle circ(x0, y0, r);
-			_circles.push_back(circ);
-		}
+	}
+	catch (InputHandlerException e) {
+		throw e;
 	}
 }
 
