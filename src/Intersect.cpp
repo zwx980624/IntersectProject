@@ -11,6 +11,15 @@ inline bool out_range(int x) {
 	return false;
 }
 
+inline int dround(double x) {
+	if (x < 0) {
+		return (int)(x - 0.5);
+	}
+	else {
+		return (int)(x + 0.5);
+	}
+}
+
 bool CIntersect::addShapes(string shape) {
 	unordered_map<string, int>::iterator iter;
 	iter = _shapes.find(shape);
@@ -78,10 +87,10 @@ void CIntersect::inputShapes(std::istream& in) {
 				}
 				if (_kb2lines[kb].size() != 0) {
 					CLine coverl = _kb2lines[kb][0];
-					int cx1 = (int)(coverl.x1() + 0.4);
-					int cy1 = (int)(coverl.y1() + 0.4);
-					int cx2 = (int)(coverl.x2() + 0.4);
-					int cy2 = (int)(coverl.y2() + 0.4);
+					int cx1 = dround(coverl.x1());
+					int cy1 = dround(coverl.y1());
+					int cx2 = dround(coverl.x2());
+					int cy2 = dround(coverl.y2());
 					if (coverl.type() == "Seg") {
 						op = "S";
 					}
@@ -116,11 +125,11 @@ void CIntersect::inputShapes(std::istream& in) {
 				}
 				vector<CLine> lines = _kb2lines[kb];
 				for (int j = 0; j < lines.size(); j++) {
-					CLine coverl = lines[0];
-					int cx1 = (int)(coverl.x1() + 0.4);
-					int cy1 = (int)(coverl.y1() + 0.4);
-					int cx2 = (int)(coverl.x2() + 0.4);
-					int cy2 = (int)(coverl.y2() + 0.4);
+					CLine coverl = lines[j];
+					int cx1 = dround(coverl.x1());
+					int cy1 = dround(coverl.y1());
+					int cx2 = dround(coverl.x2());
+					int cy2 = dround(coverl.y2());
 					if (coverl.type() == "Line") {
 						string covers = "L " + to_string(cx1) + " " + to_string(cy1)
 							+ " " + to_string(cx2) + " " + to_string(cy2);
@@ -196,15 +205,15 @@ void CIntersect::inputShapes(std::istream& in) {
 				}
 				vector<CLine> lines = _kb2lines[kb];
 				for (int j = 0; j < lines.size(); j++) {
-					CLine coverl = lines[0];
-					int cx1 = (int)(coverl.x1() + 0.4);
-					int cy1 = (int)(coverl.y1() + 0.4);
-					int cx2 = (int)(coverl.x2() + 0.4);
-					int cy2 = (int)(coverl.y2() + 0.4);
+					CLine coverl = lines[j];
+					int cx1 = dround(coverl.x1());
+					int cy1 = dround(coverl.y1());
+					int cx2 = dround(coverl.x2());
+					int cy2 = dround(coverl.y2());
 					if (coverl.type() == "Line") {
 						string covers = "L " + to_string(cx1) + " " + to_string(cy1)
 							+ " " + to_string(cx2) + " " + to_string(cy2);
-						throw ShapeCoverException(i, s, covers);
+						throw ShapeCoverException(i, str, covers);
 					}
 					else if (coverl.type() == "Ray") {
 						if (dcmp(cx1, x1) == 0 && dcmp(cy1, y1) == 0) {
@@ -219,7 +228,7 @@ void CIntersect::inputShapes(std::istream& in) {
 							|| (coverl.crossInRange(x2, y2) && !(dcmp(cx1, x2) == 0 && dcmp(cy1, y2) == 0)))) {
 							string covers = "R " + to_string(cx1) + " " + to_string(cy1)
 								+ " " + to_string(cx2) + " " + to_string(cy2);
-							throw ShapeCoverException(i, s, covers);
+							throw ShapeCoverException(i, str, covers);
 						}
 					}
 					else {
@@ -243,13 +252,13 @@ void CIntersect::inputShapes(std::istream& in) {
 							if ((cy2 > y1 && cy2 <= y2) || (cy1 >= y1 && cy1 < y2) || (cy1 <= y1 && cy2 >= y2)) {
 								string covers = "S " + to_string(cx1) + " " + to_string(cy1)
 									+ " " + to_string(cx2) + " " + to_string(cy2);
-								throw ShapeCoverException(i, s, covers);
+								throw ShapeCoverException(i, str, covers);
 							}
 						}
 						else if ((cx2 > x1 && cx2 <= x2) || (cx1 >= x1 && cx1 < x2) || (cx1 <= x1 && cx2 >= x2)){
 							string covers = "S " + to_string(cx1) + " " + to_string(cy1)
 								+ " " + to_string(cx2) + " " + to_string(cy2);
-							throw ShapeCoverException(i, s, covers);
+							throw ShapeCoverException(i, str, covers);
 						}
 					}
 				}

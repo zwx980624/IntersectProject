@@ -846,15 +846,11 @@ namespace test
 			int cnt = ins.cntTotalInsPoint();
 			Assert::AreEqual(10, cnt);
 		}
+	};
 
-		TEST_METHOD(TestMethod29)
+	TEST_CLASS(test_exception) {
+		TEST_METHOD(TestMethod_RR1)
 		{
-			// paralile
-			// 4
-			// L 0 0 0 1
-			// L 0 0 1 1
-			// L 1 0 1 2
-			// L 1 0 2 1
 			string strin = "2\nR 0 0 5 5\nR 6 6 -1 -1\n";
 			ShapeCoverException s(2, "R 6 6 -1 -1", "R 0 0 5 5");
 			InputHandlerException std = s;
@@ -865,6 +861,527 @@ namespace test
 			CIntersect ins;
 			try {
 				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_RR2)
+		{
+			string strin = "2\nR 0 0 1 1\nR 2 2 6 6\n";
+			ShapeCoverException s(2, "R 2 2 6 6", "R 0 0 1 1");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_RR4)
+		{
+			string strin = "2\nR 0 0 0 1\nR 0 -2 0 1\n";
+			ShapeCoverException s(2, "R 0 -2 0 1", "R 0 0 0 1");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_RR5)
+		{
+			string strin = "2\nR 0 0 1 0\nR -2 0 -1 0\n";
+			ShapeCoverException s(2, "R -2 0 -1 0", "R 0 0 1 0");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_SS1)
+		{
+			string strin = "3\nS 0 -1 0 1\nS 0 3 0 6\nS 0 0 0 2\n";
+			ShapeCoverException s(3, "S 0 0 0 2", "S 0 -1 0 1");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_SS2)
+		{
+			string strin = "3\nS 0 -1 0 1\nS 0 3 0 6\nS 0 0 0 -2\n";
+			ShapeCoverException s(3, "S 0 0 0 -2", "S 0 -1 0 1");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_SS3)
+		{
+			string strin = "3\nS 0 -1 0 1\nS 0 3 0 6\nS 0 4 0 5\n";
+			ShapeCoverException s(3, "S 0 4 0 5", "S 0 3 0 6");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_SS4)
+		{
+			string strin = "3\nS 0 -1 0 1\nS 0 3 0 6\nS 0 8 0 2\n";
+			ShapeCoverException s(3, "S 0 8 0 2", "S 0 3 0 6");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_SS5)
+		{
+			string strin = "3\nS -1 0 1 0\nS 3 0 6 0\nS 0 0 2 0\n";
+			ShapeCoverException s(3, "S 0 0 2 0", "S -1 0 1 0");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_SS6)
+		{
+			string strin = "3\nS -1 0 1 0\nS 3 0 6 0\nS 0 0 -2 0\n";
+			ShapeCoverException s(3, "S 0 0 -2 0", "S -1 0 1 0");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_SS7)
+		{
+			string strin = "3\nS -1 0 1 0\nS 3 0 6 0\nS 4 0 5 0\n";
+			ShapeCoverException s(3, "S 4 0 5 0", "S 3 0 6 0");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_SS8)
+		{
+			string strin = "3\nS -1 0 1 0\nS 3 0 6 0\nS 8 0 2 0\n";
+			ShapeCoverException s(3, "S 8 0 2 0", "S 3 0 6 0");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_SR1)
+		{
+			string strin = "3\nS 0 0 0 4\nS 0 0 4 0\nR 0 -2 0 -1";
+			ShapeCoverException s(3, "R 0 -2 0 -1", "S 0 0 0 4");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_SR2)
+		{
+			string strin = "3\nS 0 0 0 4\nS 0 0 4 0\nR 0 0 0 1";
+			ShapeCoverException s(3, "R 0 0 0 1", "S 0 0 0 4");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_SR3)
+		{
+			string strin = "3\nS 0 0 0 4\nS 0 0 4 0\nR 0 0 1 0";
+			ShapeCoverException s(3, "R 0 0 1 0", "S 0 0 4 0");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_SR4)
+		{
+			string strin = "3\nS 0 0 0 4\nS 0 0 4 0\nR -2 0 -1 0";
+			ShapeCoverException s(3, "R -2 0 -1 0", "S 0 0 4 0");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_RS1)
+		{
+			string strin = "3\nS 0 0 4 0\nR 0 -2 0 -1\nS 0 0 0 4";
+			ShapeCoverException s(3, "S 0 0 0 4", "R 0 -2 0 -1");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_RS2)
+		{
+			string strin = "3\nS 0 0 4 0\nR 0 0 0 1\nS 0 0 0 4";
+			ShapeCoverException s(3, "S 0 0 0 4", "R 0 0 0 1");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_RS3)
+		{
+			string strin = "3\nS 0 0 0 4\nR 0 0 1 0\nS 0 0 4 0";
+			ShapeCoverException s(3, "S 0 0 4 0", "R 0 0 1 0");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_RS4)
+		{
+			string strin = "3\nR -2 0 -1 0\nS 0 0 0 4\nS 0 0 4 0";
+			ShapeCoverException s(3, "S 0 0 4 0", "R -2 0 -1 0");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_N0)
+		{
+			string strin = "";
+			ShapeNumberException s("Can't read Correct N");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_N1)
+		{
+			string strin = "C 1 2 3\nL 1 2 3";
+			ShapeNumberException s("Can't read Correct N");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_N2)
+		{
+			string strin = "100000000000000000";
+			ShapeNumberException s("Can't read Correct N");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_N3)
+		{
+			string strin = "10000000";
+			ShapeNumberException s("N is out of range");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_N4)
+		{
+			string strin = "0";
+			ShapeNumberException s("N is out of range");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_N5)
+		{
+			string strin = "3";
+			ShapeNumberException s("the number of shapes is different from N");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
+			}
+			catch (InputHandlerException e) {
+				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
+				//Assert::AreEqual(true, std.what() == t2);
+			}
+		}
+
+		TEST_METHOD(TestMethod_N6)
+		{
+			string strin = "1\nL 1 2 3 4\nC 1 1 2";
+			ShapeNumberException s("the number of shapes is different from N");
+			InputHandlerException std = s;
+			istringstream in(strin);
+			if (!in) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			try {
+				ins.inputShapes(in);
+				Assert::AreEqual(132, 0);
 			}
 			catch (InputHandlerException e) {
 				Assert::AreEqual(true, strcmp(std.what(), e.what()) == 0);
