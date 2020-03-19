@@ -22,7 +22,7 @@ private:
 class ShapeFormatException :public InputHandlerException {
 public:
 	ShapeFormatException(int l, string e) :
-		InputHandlerException("the " + to_string(l) + "th: " + e) {
+		InputHandlerException("the " + to_string(l) + "th graphics: " + e) {
 	};
 	const char* what() const throw ()
 	{
@@ -34,7 +34,7 @@ public:
 class ShapeCoverException :public ShapeFormatException {
 public:
 	ShapeCoverException(int l, string e1, string e2) :
-		ShapeFormatException(l, e1 + " : Covered graphics! with " + e2) {
+		ShapeFormatException(l, e1 + " : Covered graphics! with " + e2 +".\nAll lines cannot overlap, please modify one of them.") {
 	};
 	const char* what() const throw ()
 	{
@@ -58,7 +58,7 @@ public:
 class IllegalFormatException :public ShapeFormatException {
 public:
 	IllegalFormatException(int l, string e) : 
-		ShapeFormatException(l, e + ": Illegal input format!") {
+		ShapeFormatException(l, e + ": Illegal input format!\nPlease modify this line refer to https://edu.cnblogs.com/campus/buaa/BUAA_SE_2020_LJ/homework/10466") {
 	};
 	const char* what() const throw ()
 	{
@@ -70,7 +70,7 @@ public:
 class OutRangeException :public ShapeFormatException {
 public:
 	OutRangeException(int l, string e) :
-		ShapeFormatException(l, e + ": Geometric object parameters are out of range!") {
+		ShapeFormatException(l, e + ": Graphics parameters are out of range!\nPlease modify the paras according to https://edu.cnblogs.com/campus/buaa/BUAA_SE_2020_LJ/homework/10466") {
 	};
 	const char* what() const throw ()
 	{
@@ -82,7 +82,7 @@ public:
 class ShapeRepeatedException :public ShapeFormatException {
 public:
 	ShapeRepeatedException(int l, string e) :
-		ShapeFormatException(l, e + ": Repeated graphics!") {
+		ShapeFormatException(l, e + ": Repeated graphics!\nPlease delete this graphics.") {
 	};
 	const char* what() const throw ()
 	{
@@ -94,7 +94,7 @@ public:
 class IllegalLineException :public ShapeFormatException {
 public:
 	IllegalLineException(int l, string e) :
-		ShapeFormatException(l, e + ": Two points cannot be the same!") {
+		ShapeFormatException(l, e + ": Two points cannot be the same!\nPlease change one of them.") {
 	};
 	const char* what() const throw ()
 	{

@@ -1252,7 +1252,7 @@ namespace test
 		TEST_METHOD(TestMethod_N0)
 		{
 			string strin = "";
-			ShapeNumberException s("Can't read Correct N");
+			ShapeNumberException s("Can't read Correct N. The fisrt line should be an Integer in [1, 500000]");
 			InputHandlerException std = s;
 			istringstream in(strin);
 			if (!in) {
@@ -1272,7 +1272,7 @@ namespace test
 		TEST_METHOD(TestMethod_N1)
 		{
 			string strin = "C 1 2 3\nL 1 2 3";
-			ShapeNumberException s("Can't read Correct N");
+			ShapeNumberException s("Can't read Correct N. The fisrt line should be an Integer in [1, 500000]");
 			InputHandlerException std = s;
 			istringstream in(strin);
 			if (!in) {
@@ -1292,7 +1292,7 @@ namespace test
 		TEST_METHOD(TestMethod_N2)
 		{
 			string strin = "100000000000000000";
-			ShapeNumberException s("Can't read Correct N");
+			ShapeNumberException s("Can't read Correct N. The fisrt line should be an Integer in [1, 500000]");
 			InputHandlerException std = s;
 			istringstream in(strin);
 			if (!in) {
@@ -1312,7 +1312,7 @@ namespace test
 		TEST_METHOD(TestMethod_N3)
 		{
 			string strin = "10000000";
-			ShapeNumberException s("N is out of range");
+			ShapeNumberException s("N is out of range. The fisrt line should be an Integer in [1, 500000]");
 			InputHandlerException std = s;
 			istringstream in(strin);
 			if (!in) {
@@ -1332,7 +1332,7 @@ namespace test
 		TEST_METHOD(TestMethod_N4)
 		{
 			string strin = "0";
-			ShapeNumberException s("N is out of range");
+			ShapeNumberException s("N is out of range. The fisrt line should be an Integer in [1, 500000]");
 			InputHandlerException std = s;
 			istringstream in(strin);
 			if (!in) {
@@ -1352,7 +1352,7 @@ namespace test
 		TEST_METHOD(TestMethod_N5)
 		{
 			string strin = "3";
-			ShapeNumberException s("the number of shapes is different from N");
+			ShapeNumberException s("The number of graphics is less than N.");
 			InputHandlerException std = s;
 			istringstream in(strin);
 			if (!in) {
@@ -1372,7 +1372,7 @@ namespace test
 		TEST_METHOD(TestMethod_N6)
 		{
 			string strin = "1\nL 1 2 3 4\nC 1 1 2";
-			ShapeNumberException s("the number of shapes is different from N");
+			ShapeNumberException s("The number of graphics is larger than N.");
 			InputHandlerException std = s;
 			istringstream in(strin);
 			if (!in) {

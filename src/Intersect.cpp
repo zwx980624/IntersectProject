@@ -38,17 +38,17 @@ void CIntersect::inputShapes(std::istream& in) {
 		N = stoi(str);
 	}
 	catch (exception e) {
-		throw ShapeNumberException("Can't read Correct N");
+		throw ShapeNumberException("Can't read Correct N. The fisrt line should be an Integer in [1, 500000]");
 	}
 	if (N <= 0 || N > 500000) {
-		throw ShapeNumberException("N is out of range");
+		throw ShapeNumberException("N is out of range. The fisrt line should be an Integer in [1, 500000]");
 	}
 	try {
 		for (int i = 1; i <= N; i++) {
 			try {
 				while (true) {
 					if (!getline(in, str)) {
-						throw ShapeNumberException("the number of shapes is different from N");
+						throw ShapeNumberException("The number of graphics is less than N.");
 					}
 					if (str.size() != 0) {
 						break;
@@ -285,7 +285,7 @@ void CIntersect::inputShapes(std::istream& in) {
 				break;
 			}
 			if (str.size() != 0) {
-				throw ShapeNumberException("the number of shapes is different from N");
+				throw ShapeNumberException("The number of graphics is larger than N.");
 			}
 		}
 	}
