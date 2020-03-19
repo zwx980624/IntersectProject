@@ -15,6 +15,7 @@ private:
 	//std::map<CPoint, std::vector<int>> _insp2shapesId;
 	std::unordered_map<CPoint, std::vector<int>, PointHash > _insp2shapesId;
 	std::unordered_set<CPoint, PointHash> _insPoints;
+	std::unordered_map<std::pair<CSlope, CBias>, std::vector<CLine>, KbHash> _kb2lines;
 
 public:
 	void inputShapes(std::istream& in);

@@ -2,6 +2,15 @@
 
 using namespace std;
 
+inline int dround(double x) {
+	if (x < 0) {
+		return (int)(x - 0.5);
+	}
+	else {
+		return (int)(x + 0.5);
+	}
+}
+
 void CIntersect::inputShapes(std::istream& in) {
 	int N;
 	in >> N;
@@ -19,6 +28,35 @@ void CIntersect::inputShapes(std::istream& in) {
 			int x1, y1, x2, y2;
 			in >> x1 >> y1 >> x2 >> y2;
 			CLine ray(x1, y1, x2, y2, "Ray");
+			pair<CSlope, CBias> kb = make_pair(ray.k(), ray.b());
+			if (ray.k().isInf()) {
+				kb = make_pair(ray.k(), CBias((double)x1));
+			}
+			vector<CLine> lines = _kb2lines[kb];
+			for (int j = 0; j < lines.size(); j++) {
+				CLine coverl = lines[j];
+				int cx1 = dround(coverl.x1());
+				int cy1 = dround(coverl.y1());
+				int cx2 = dround(coverl.x2());
+				int cy2 = dround(coverl.y2());
+				if (coverl.type() == "Ray") {
+					if (dcmp(cx1, x1) == 0 && dcmp(cy1, y1) == 0) {
+						_insp2shapesId[CPoint(cx1, cy1)].push_back(coverl.id());
+						_insp2shapesId[CPoint(cx1, cy1)].push_back(ray.id());
+					}
+				}
+				else {
+					if (dcmp(cx1, x1) == 0 && dcmp(cy1, y1) == 0) {
+						_insp2shapesId[CPoint(cx1, cy1)].push_back(coverl.id());
+						_insp2shapesId[CPoint(cx1, cy1)].push_back(ray.id());
+					}
+					if (dcmp(cx2, x1) == 0 && dcmp(cy2, y1) == 0) {
+						_insp2shapesId[CPoint(cx2, cy2)].push_back(coverl.id());
+						_insp2shapesId[CPoint(cx2, cy2)].push_back(ray.id());
+					}
+				}
+			}
+			_kb2lines[kb].push_back(ray);
 			_k2lines[ray.k()].push_back(ray);
 			_lines.push_back(ray);
 		}
@@ -26,6 +64,47 @@ void CIntersect::inputShapes(std::istream& in) {
 			int x1, y1, x2, y2;
 			in >> x1 >> y1 >> x2 >> y2;
 			CLine seg(x1, y1, x2, y2, "Seg");
+			pair<CSlope, CBias> kb = make_pair(seg.k(), seg.b());
+			if (seg.k().isInf()) {
+				kb = make_pair(seg.k(), CBias((double)x1));
+			}
+			vector<CLine> lines = _kb2lines[kb];
+			for (int j = 0; j < lines.size(); j++) {
+				CLine coverl = lines[j];
+				int cx1 = dround(coverl.x1());
+				int cy1 = dround(coverl.y1());
+				int cx2 = dround(coverl.x2());
+				int cy2 = dround(coverl.y2());
+				if (coverl.type() == "Ray") {
+					if (dcmp(cx1, x1) == 0 && dcmp(cy1, y1) == 0) {
+						_insp2shapesId[CPoint(cx1, cy1)].push_back(coverl.id());
+						_insp2shapesId[CPoint(cx1, cy1)].push_back(seg.id());
+					}
+					if (dcmp(cx1, x2) == 0 && dcmp(cy1, y2) == 0) {
+						_insp2shapesId[CPoint(cx1, cy1)].push_back(coverl.id());
+						_insp2shapesId[CPoint(cx1, cy1)].push_back(seg.id());
+					}
+				}
+				else {
+					if (dcmp(cx1, x1) == 0 && dcmp(cy1, y1) == 0) {
+						_insp2shapesId[CPoint(cx1, cy1)].push_back(coverl.id());
+						_insp2shapesId[CPoint(cx1, cy1)].push_back(seg.id());
+					}
+					if (dcmp(cx1, x2) == 0 && dcmp(cy1, y2) == 0) {
+						_insp2shapesId[CPoint(cx1, cy1)].push_back(coverl.id());
+						_insp2shapesId[CPoint(cx1, cy1)].push_back(seg.id());
+					}
+					if (dcmp(cx2, x2) == 0 && dcmp(cy2, y2) == 0) {
+						_insp2shapesId[CPoint(cx2, cy2)].push_back(coverl.id());
+						_insp2shapesId[CPoint(cx2, cy2)].push_back(seg.id());
+					}
+					if (dcmp(cx2, x2) == 0 && dcmp(cy2, y2) == 0) {
+						_insp2shapesId[CPoint(cx2, cy2)].push_back(coverl.id());
+						_insp2shapesId[CPoint(cx2, cy2)].push_back(seg.id());
+					}
+				}
+			}
+			_kb2lines[kb].push_back(seg);
 			_k2lines[seg.k()].push_back(seg);
 			_lines.push_back(seg);
 		}

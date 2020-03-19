@@ -60,8 +60,20 @@ public:
 	CBias() :_isNan(false), _b(0.0) {}
 	CBias(double b) :_isNan(false), _b(b) {}
 	CBias(bool nan) :_isNan(nan), _b(0.0) {}
+	bool operator<(const CBias& rhs) const;
+	bool operator == (const CBias& rhs) const;
 	bool isNan() const { return _isNan; }
 	double val() const { return _b; }
+};
+
+class KbHash
+{
+public:
+	std::size_t operator()(const std::pair<CSlope, CBias>& c) const
+	{
+		return std::hash<double>()(c.first.isInf()) << 31 + std::hash<double>()(c.first.val()) << 16
+			+ std::hash<double>()(c.second.isNan()) << 15 + std::hash<double>()(c.second.val());
+	}
 };
 
 class CShape {

@@ -773,5 +773,77 @@ namespace test
 			Assert::AreEqual(true, CPoint(sqrt(2), sqrt(2)) == ans[0]);
 			Assert::AreEqual(true, CPoint(-sqrt(2), -sqrt(2)) == ans[1]);
 		}
+
+		TEST_METHOD(TestMethod29)
+		{
+			// paralile
+			// 4
+			// L 0 0 0 1
+			// L 0 0 1 1
+			// L 1 0 1 2
+			// L 1 0 2 1
+			ifstream fin("../test/test19.txt");
+			if (!fin) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			ins.inputShapes(fin);
+			int cnt = ins.cntTotalInsPoint();
+			Assert::AreEqual(1, cnt);
+		}
+
+		TEST_METHOD(TestMethod30)
+		{
+			// paralile
+			// 4
+			// L 0 0 0 1
+			// L 0 0 1 1
+			// L 1 0 1 2
+			// L 1 0 2 1
+			ifstream fin("../test/test20.txt");
+			if (!fin) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			ins.inputShapes(fin);
+			int cnt = ins.cntTotalInsPoint();
+			Assert::AreEqual(1, cnt);
+		}
+
+		TEST_METHOD(TestMethod31)
+		{
+			// paralile
+			// 4
+			// L 0 0 0 1
+			// L 0 0 1 1
+			// L 1 0 1 2
+			// L 1 0 2 1
+			ifstream fin("../test/test21.txt");
+			if (!fin) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			ins.inputShapes(fin);
+			int cnt = ins.cntTotalInsPoint();
+			Assert::AreEqual(1, cnt);
+		}
+
+		TEST_METHOD(TestMethod32)
+		{
+			// paralile
+			// 4
+			// L 0 0 0 1
+			// L 0 0 1 1
+			// L 1 0 1 2
+			// L 1 0 2 1
+			ifstream fin("../test/test22.txt");
+			if (!fin) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			ins.inputShapes(fin);
+			int cnt = ins.cntTotalInsPoint();
+			Assert::AreEqual(10, cnt);
+		}
 	};
 }
