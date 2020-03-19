@@ -36,19 +36,16 @@ int main(int argc, char** argv) {
 		ins.inputShapes(fin);
 	}
 	catch (InputHandlerException e) {
-		e.what();
+		cout << e.what() <<endl;
 		exit(0);
 	}
-
-
 
 	int cnt = 0;
 	try {
 		cnt = ins.cntTotalInsPoint();
 	}
 	catch (exception e) {
-		e.what();
- 		exit(0);
+		cout << e.what() <<endl;
 	}
 	ofstream fout(outfile);
 	fout << cnt;

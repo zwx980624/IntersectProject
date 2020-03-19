@@ -12,7 +12,6 @@ public:
 	}
 	const char* what() const throw ()
 	{
-		cout << _info << endl;
 		return (char*)_info.data();
 	}
 private:
@@ -26,7 +25,6 @@ public:
 	};
 	const char* what() const throw ()
 	{
-		cout << info() << endl;
 		return (char*)info().data();
 	}
 };
@@ -38,9 +36,7 @@ public:
 	};
 	const char* what() const throw ()
 	{
-		cout << info() << endl;
 		string tmp = info();
-		cout << tmp << endl;
 		return tmp.data();
 	}
 };
@@ -50,7 +46,6 @@ public:
 	ShapeNumberException(string e) : InputHandlerException(e) {};
 	const char* what() const throw ()
 	{
-		cout << info() << endl;
 		return (char*)info().data();
 	}
 };
@@ -62,7 +57,6 @@ public:
 	};
 	const char* what() const throw ()
 	{
-		cout << info() << endl;
 		return (char*)info().data();
 	}
 };
@@ -74,7 +68,6 @@ public:
 	};
 	const char* what() const throw ()
 	{
-		cout << info() << endl;
 		return (char*)info().data();
 	}
 };
@@ -86,7 +79,6 @@ public:
 	};
 	const char* what() const throw ()
 	{
-		cout << info() << endl;
 		return (char*)info().data();
 	}
 };
@@ -98,7 +90,6 @@ public:
 	};
 	const char* what() const throw ()
 	{
-		cout << info() << endl;
 		return (char*)info().data();
 	}
 };
@@ -111,7 +102,6 @@ public:
 	}
 	const char* what() const throw ()
 	{
-		cout << _info << endl;
 		return (char*)_info.data();
 	}
 private:
@@ -126,7 +116,6 @@ public:
 	}
 	const char* what() const throw ()
 	{
-		cout << _info << endl;
 		return (char*)_info.data();
 	}
 private:

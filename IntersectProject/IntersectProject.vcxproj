@@ -19,12 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\calcInterface.cpp" />
     <ClCompile Include="..\src\Intersect.cpp" />
     <ClCompile Include="..\src\Main.cpp" />
     <ClCompile Include="..\src\myException.cpp" />
     <ClCompile Include="..\src\Shape.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\calcInterface.h" />
     <ClInclude Include="..\src\Intersect.h" />
     <ClInclude Include="..\src\myException.h" />
     <ClInclude Include="..\src\Shape.h" />
