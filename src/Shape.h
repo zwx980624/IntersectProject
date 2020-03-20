@@ -4,8 +4,10 @@
 #include <unordered_map>
 #include<utility>
 #define EPS 1e-8
+#define COLLISION 100000.
 
 int dcmp(double d1, double d2);
+unsigned long long dround2ull(double x);
 
 class CPoint {
 private:
@@ -25,7 +27,9 @@ class PointHash
 public:
 	std::size_t operator()(const CPoint& c) const
 	{
-		return std::hash<double>()(c.x()) + (std::hash<double>()(c.y()) << 16);
+		unsigned long long x = dround2ull(c.x() * COLLISION);
+		unsigned long long y = dround2ull(c.y() * COLLISION);
+		return std::hash<unsigned long long>()(x) + (std::hash<unsigned long long>()(y) << 16);
 	}
 };
 
@@ -49,7 +53,8 @@ class SlopeHash
 public:
 	std::size_t operator()(const CSlope& s) const
 	{
-		return std::hash<bool>()(s.isInf()) + (std::hash<double>()(s.val()) << 16);
+		unsigned long long val = dround2ull(s.val() * COLLISION);
+		return std::hash<bool>()(s.isInf()) + (std::hash<unsigned long long>()(val) << 16);
 	}
 };
 
@@ -72,8 +77,10 @@ class KbHash
 public:
 	std::size_t operator()(const std::pair<CSlope, CBias>& c) const
 	{
-		return std::hash<double>()(c.first.isInf()) << 31 + std::hash<double>()(c.first.val()) << 16
-			+ std::hash<double>()(c.second.isNan()) << 15 + std::hash<double>()(c.second.val());
+		unsigned long long kval = dround2ull(c.first.val() * COLLISION);
+		unsigned long long bval = dround2ull(c.second.val() * COLLISION);
+		return std::hash<bool>()(c.first.isInf()) << 31 + std::hash<unsigned long long>()(kval) << 16
+			+ std::hash<bool>()(c.second.isNan()) << 15 + std::hash<unsigned long long>()(bval);
 	}
 };
 

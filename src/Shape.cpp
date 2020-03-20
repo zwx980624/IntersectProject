@@ -12,6 +12,16 @@ int dcmp(double d1, double d2) {
 	}
 }
 
+unsigned long long dround2ull(double x) {
+	if (x < 0) {
+		return (long long)(x - 0.5);
+	}
+	else {
+		return (long long)(x + 0.5);
+	}
+}
+
+
 bool CPoint::operator < (const CPoint & rhs) const 
 {
 	if (rhs._x - _x > EPS) {
