@@ -843,7 +843,7 @@ namespace test
 			CIntersect ins;
 			ins.inputShapes(fin);
 			int cnt = ins.cntTotalInsPoint();
-			Assert::AreEqual(76, cnt);
+			Assert::AreEqual(77, cnt);
 		}
 	};
 }

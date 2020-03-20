@@ -94,7 +94,7 @@ void CIntersect::inputShapes(std::istream& in) {
 						_insp2shapesId[CPoint(cx1, cy1)].push_back(coverl.id());
 						_insp2shapesId[CPoint(cx1, cy1)].push_back(seg.id());
 					}
-					if (dcmp(cx2, x2) == 0 && dcmp(cy2, y2) == 0) {
+					if (dcmp(cx2, x1) == 0 && dcmp(cy2, y1) == 0) {
 						_insp2shapesId[CPoint(cx2, cy2)].push_back(coverl.id());
 						_insp2shapesId[CPoint(cx2, cy2)].push_back(seg.id());
 					}
