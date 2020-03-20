@@ -14,7 +14,6 @@ inline int dround(double x) {
 void CIntersect::inputShapes(std::istream& in) {
 	int N;
 	in >> N;
-	CPoint c1 = CPoint(1071.80000000, -26.60000000);
 	while (N--) {
 		string shape;
 		in >> shape;
@@ -22,9 +21,6 @@ void CIntersect::inputShapes(std::istream& in) {
 			int x1, y1, x2, y2;
 			in >> x1 >> y1 >> x2 >> y2;
 			CLine line(x1, y1, x2, y2);
-			if (dcmp(line.A()*c1.x() + line.B()*c1.y() + line.C() ,0)==0) {
-				cout << "L " << x1 << " " << y1 << " " << x2 << " " << y2 << endl;
-			}
 			_k2lines[line.k()].push_back(line);
 			_lines.push_back(line);
 		}
@@ -32,9 +28,6 @@ void CIntersect::inputShapes(std::istream& in) {
 			int x1, y1, x2, y2;
 			in >> x1 >> y1 >> x2 >> y2;
 			CLine ray(x1, y1, x2, y2, "Ray");
-			if ((dcmp(ray.A() * c1.x() + ray.B() * c1.y() + ray.C(), 0) == 0) && ray.crossInRange(c1.x(), c1.y())) {
-				cout << "R " << x1 << " " << y1 << " " << x2 << " " << y2 << endl;
-			}
 			pair<CSlope, CBias> kb = make_pair(ray.k(), ray.b());
 			if (ray.k().isInf()) {
 				kb = make_pair(ray.k(), CBias((double)x1));
@@ -71,9 +64,6 @@ void CIntersect::inputShapes(std::istream& in) {
 			int x1, y1, x2, y2;
 			in >> x1 >> y1 >> x2 >> y2;
 			CLine seg(x1, y1, x2, y2, "Seg");
-			if (seg.crossInRange(c1.x(), c1.y())) {
-				cout << "S " << x1 << " " << y1 << " " << x2 << " " << y2 << endl;
-			}
 			pair<CSlope, CBias> kb = make_pair(seg.k(), seg.b());
 			if (seg.k().isInf()) {
 				kb = make_pair(seg.k(), CBias((double)x1));
@@ -122,9 +112,6 @@ void CIntersect::inputShapes(std::istream& in) {
 			int x0, y0, r;
 			in >> x0 >> y0 >> r;
 			CCircle circ(x0, y0, r);
-			if (dcmp((c1.x()-x0)*(c1.x()-x0)+(c1.y()-y0)*(c1.y()-y0), r*r)==0) {
-				cout << "C " << x0 << " " << y0 << " " << r << endl;
-			}
 			_circles.push_back(circ);
 		}
 	}
