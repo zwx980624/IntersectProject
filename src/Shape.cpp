@@ -1,5 +1,6 @@
 #include "Shape.h"
 
+
 int dcmp(double d1, double d2) {
 	if (d1 - d2 > EPS) {
 		return 1;
@@ -9,6 +10,15 @@ int dcmp(double d1, double d2) {
 	}
 	else {
 		return 0;
+	}
+}
+
+unsigned long long dround2ull(double x) {
+	if (x < 0) {
+		return (long long)(x - 0.5);
+	}
+	else {
+		return (long long)(x + 0.5);
 	}
 }
 
