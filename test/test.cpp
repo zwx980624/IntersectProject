@@ -833,5 +833,17 @@ namespace test
 			int cnt = ins.cntTotalInsPoint();
 			Assert::AreEqual(5, cnt);
 		}
+
+		TEST_METHOD(TestMethod34)
+		{
+			ifstream fin("../test/test24.txt");
+			if (!fin) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			ins.inputShapes(fin);
+			int cnt = ins.cntTotalInsPoint();
+			Assert::AreEqual(76, cnt);
+		}
 	};
 }

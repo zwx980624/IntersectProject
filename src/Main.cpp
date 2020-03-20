@@ -6,10 +6,6 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-	if (argc != 5) {
-		cout << "Usage: intersect.exe -i input.txt -o output.txt\n";
-		exit(0);
-	}
 	string infile, outfile;
 	if (strcmp(argv[1], "-i") == 0 && strcmp(argv[3], "-o") == 0) {
 		infile = string(argv[2]);
@@ -19,15 +15,7 @@ int main(int argc, char** argv) {
 		infile = string(argv[4]);
 		outfile = string(argv[2]);
 	}
-	else {
-		cout << "Usage: intersect.exe -i input.txt -o output.txt\n";
-		exit(0);
-	}
 	ifstream fin(infile);
-	if (!fin) {
-		cout << "input file cannot open\n";
-		exit(0);
-	}
 	clock_t tic = clock();
 	CIntersect ins;
 	ins.inputShapes(fin);
