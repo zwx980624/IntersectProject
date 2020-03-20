@@ -24,12 +24,24 @@
     <ClCompile Include="..\src\Shape.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\myException.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calcInterface.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Intersect.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Shape.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\myException.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calcInterface.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
