@@ -2,7 +2,7 @@
 #include <string>
 #include<cmath>
 #include <unordered_map>
-#define EPS 1e-8
+#define EPS 1e-10
 #define COLLISION 100000.
 
 int dcmp(double d1, double d2);

@@ -776,12 +776,6 @@ namespace test
 
 		TEST_METHOD(TestMethod29)
 		{
-			// paralile
-			// 4
-			// L 0 0 0 1
-			// L 0 0 1 1
-			// L 1 0 1 2
-			// L 1 0 2 1
 			ifstream fin("../test/test19.txt");
 			if (!fin) {
 				Assert::AreEqual(132, 0);
@@ -794,12 +788,6 @@ namespace test
 
 		TEST_METHOD(TestMethod30)
 		{
-			// paralile
-			// 4
-			// L 0 0 0 1
-			// L 0 0 1 1
-			// L 1 0 1 2
-			// L 1 0 2 1
 			ifstream fin("../test/test20.txt");
 			if (!fin) {
 				Assert::AreEqual(132, 0);
@@ -812,12 +800,6 @@ namespace test
 
 		TEST_METHOD(TestMethod31)
 		{
-			// paralile
-			// 4
-			// L 0 0 0 1
-			// L 0 0 1 1
-			// L 1 0 1 2
-			// L 1 0 2 1
 			ifstream fin("../test/test21.txt");
 			if (!fin) {
 				Assert::AreEqual(132, 0);
@@ -830,12 +812,6 @@ namespace test
 
 		TEST_METHOD(TestMethod32)
 		{
-			// paralile
-			// 4
-			// L 0 0 0 1
-			// L 0 0 1 1
-			// L 1 0 1 2
-			// L 1 0 2 1
 			ifstream fin("../test/test22.txt");
 			if (!fin) {
 				Assert::AreEqual(132, 0);
@@ -844,6 +820,18 @@ namespace test
 			ins.inputShapes(fin);
 			int cnt = ins.cntTotalInsPoint();
 			Assert::AreEqual(10, cnt);
+		}
+
+		TEST_METHOD(TestMethod33)
+		{
+			ifstream fin("../test/test23.txt");
+			if (!fin) {
+				Assert::AreEqual(132, 0);
+			}
+			CIntersect ins;
+			ins.inputShapes(fin);
+			int cnt = ins.cntTotalInsPoint();
+			Assert::AreEqual(5, cnt);
 		}
 	};
 }
