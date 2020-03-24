@@ -12,9 +12,8 @@
 #include <QMessageBox>
 #include <sstream>
 
-#pragma comment(lib,"calcInterface.lib")
+#pragma comment(lib,"DllexprotProj.lib")
 _declspec(dllexport) extern "C" int guiProcess(std::vector<std::pair<double, double>> *points, std::string msg);
-_declspec(dllexport) extern "C" void cmdProcess(int argc, char *argv[]);
 
 IntersectionGUI::IntersectionGUI(QWidget *parent)
 	: QMainWindow(parent)
