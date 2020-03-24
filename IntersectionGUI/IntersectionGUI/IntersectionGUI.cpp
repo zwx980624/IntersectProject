@@ -12,7 +12,7 @@
 #include <QMessageBox>
 #include <sstream>
 
-#pragma comment(lib,"DllexprotProj.lib")
+#pragma comment(lib,"calcInterface.lib")
 _declspec(dllexport) extern "C" int guiProcess(std::vector<std::pair<double, double>> *points, std::string msg);
 
 IntersectionGUI::IntersectionGUI(QWidget *parent)

@@ -6,6 +6,14 @@
 
 将其他组的核心模块dll与我们的GUI界面对接，可以在IntersectionGUI路径查看具体代码或编译运行。
 
+- 直接运行版：
+
+  - 下载[此地址](https://bhpan.buaa.edu.cn:443/link/258F2088AC42FAD0D3C40BC78E689DC6)中的package并解压，在windows x64机器上，点击`pack/IntersectionGUI.exe`即可运行，默认dll为另一组的dll。
+
+  - 对接：删除pack中的`calcInterface.lib`和`calcInterface.dll`
+
+    将`ourInterfaceDLL`或`othersInterfaceDLL`文件夹下对应的文件拷贝到pack路径，双击exe即可直接运行
+
 ## 一、作业要求简介
 
 本文是北京航空航天大学计算机学院软件工程课程的结对项目作业，在本次作业中，两位同学一组，以结对编程的方式共同完成一项需求。
